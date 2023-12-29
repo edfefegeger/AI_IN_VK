@@ -33,7 +33,7 @@ while True:
         attachments = post.get('attachments', [])
         for attachment in attachments:
             if attachment['type'] == 'photo':
-                # Получаем URL фотографии из максимального доступного размера
+              
                 photo_url = attachment['photo']['sizes'][-1]['url']
                 photo_urls.append(photo_url)
 
