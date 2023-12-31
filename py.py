@@ -12,7 +12,7 @@ while True:
     response = requests.get(
         'https://api.vk.com/method/wall.get',
         params={
-            'count': 2,
+            'count': 1,
             'filter': 'owner, others',
             'access_token': token,
             'v': version,
@@ -30,15 +30,9 @@ while True:
         post_text = post.get('text', '')
         text += post_text + '\n'
 
-        attachments = post.get('attachments', [])
-        for attachment in attachments:
-            if attachment['type'] == 'photo':
-              
-                photo_url = attachment['photo']['sizes'][-1]['url']
-                photo_urls.append(photo_url)
 
     print(text)
-    print(photo_urls)
+
        
         
 
@@ -48,7 +42,6 @@ while True:
             'access_token': another_token,
             'text': text,    
             'group_id': my_id,    
-            'attachment': ','.join(photo_urls),
             'v': version
         }
    
