@@ -8,8 +8,8 @@ another_token = 'vk1.a.3BiiZapxozlBzfZ5yqDehmpybegWGIa6aJOHX5lPSDSfcYDk2xh7QmQO_
 openai.api_key = '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'
 promt = "Hi"
 
-zhitenev_id = "331377292"
-chatter = 331377292
+zhitenev_id = "523487848"
+chatter = 523487848
 
 my_id = '545067517'
 version = 5.199
@@ -72,7 +72,7 @@ while True:
                     'v': version
                     }
                     )
-            break
+                break
                     
       
             if message_from == chatter and text != "":
