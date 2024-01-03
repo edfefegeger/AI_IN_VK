@@ -8,8 +8,8 @@ another_token = 'vk1.a.3BiiZapxozlBzfZ5yqDehmpybegWGIa6aJOHX5lPSDSfcYDk2xh7QmQO_
 openai.api_key = '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'
 promt = "Hi"
 
-zhitenev_id = "523487848"
-chatter = 523487848
+zhitenev_id = "589441005"
+chatter = 589441005
 
 my_id = '545067517'
 version = 5.199
@@ -21,7 +21,7 @@ while True:
         'https://api.vk.com/method/messages.getHistory',
         params={
             'access_token': another_token,
-            'count': 5,
+            'count': 7,
             'user_id': zhitenev_id,
             'rev': 0,
             'v': version
@@ -50,12 +50,8 @@ while True:
                     print(transcript_message)
                     completion_audio = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo-0613",
-                    temperature=0.5,
-                    top_p=1,
-                    frequency_penalty=0,
-                    presence_penalty=0,
                     messages=[
-                    {"role": "system", "content": "You're an interesting conversationalist."},
+                    {"role": "system", "content": "Сыграй роль аегриссивного подростка с улиц живущего по понятиям тупого и текст пиши короче"},
                     {"role": "user", "content": transcript_message},
                     ]
                     )
@@ -66,7 +62,7 @@ while True:
                     'https://api.vk.com/method/messages.send',
                     params={
                     'access_token': another_token,
-                    'user_id': my_id,
+                    'user_id': zhitenev_id,
                     'random_id': 0,
                     'message':ready_audio_message,
                     'v': version
@@ -81,12 +77,8 @@ while True:
             
                 completion = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo-0613",
-                    temperature=0.5,
-                    top_p=1,
-                    frequency_penalty=0,
-                    presence_penalty=0,
                     messages=[
-                    {"role": "system", "content": "You're an interesting conversationalist."},
+                    {"role": "system", "content": "Сыграй роль аегриссивного подростка с улиц живущего по понятиям тупого и текст пиши короче"},
                     {"role": "user", "content": text},
                     ]
                     )
@@ -96,7 +88,7 @@ while True:
                 'https://api.vk.com/method/messages.send',
                 params={
                 'access_token': another_token,
-                'user_id': my_id,
+                'user_id': zhitenev_id,
                 'random_id': 0,
                 'message':ready_message,
                 'v': version
@@ -115,10 +107,7 @@ while True:
     #     params={
     #         'count': 1,
     #         'filter': 'owner, others',
-    #         'access_token': token,
-    #         'v': version,
-    #         'domain': domain
-        
+    #         'access_token': token,You're an interesting conversationalist
     #     }
     # )
     # data = response.json()['response']['items']
@@ -177,4 +166,4 @@ while True:
     # )
     a = a + 1
     print('круг пройден:', a )
-    time.sleep(15)  
+    time.sleep(130)  
