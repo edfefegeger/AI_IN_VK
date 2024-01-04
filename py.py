@@ -91,7 +91,7 @@ while True:
                                             'access_token': another_token,
                                             'user_id': zhitenev_id,
                                             'random_id': 0,
-                                            'attachment': "photo 754281419_754281419"
+                                            'attachment': "photo 754281419_754281419",
                                             'v': version,
                                             'reply_to': message_id
                                             }
