@@ -1,7 +1,7 @@
 import requests
 import time
 import openai
-
+import random
 
 token = '2ac52c402ac52c402ac52c40ad29d3edae22ac52ac52c404f485bcc3b184095b84a36bc'
 another_token = 'vk1.a.3BiiZapxozlBzfZ5yqDehmpybegWGIa6aJOHX5lPSDSfcYDk2xh7QmQO_HOoTlhhhqLr9lzzFsaFT04OLPqcHazf-YCaY4FhzlLciy8pA0_6jvXcoP6Mf7uWGfoYFRbY5Kfg3d-waWIl6M7Ma6MCVqMPrsDzYUaGaRbvizd2-STx9mMLMpSUsGyF-U7sYuiPUjJz4Wh1ImDF9ar5rcPYDQ'
@@ -176,5 +176,6 @@ while True:
      
     # )
     a = a + 1
+    time_value = random.randint(5, 100)
     print('круг пройден:', a )
-    time.sleep(15)  
+    time.sleep(time_value)  
