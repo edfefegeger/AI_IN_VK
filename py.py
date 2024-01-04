@@ -8,12 +8,14 @@ another_token = 'vk1.a.3BiiZapxozlBzfZ5yqDehmpybegWGIa6aJOHX5lPSDSfcYDk2xh7QmQO_
 openai.api_key = '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'
 promt = "Hi"
 
-zhitenev_id = "589441005"
-chatter = 589441005
+zhitenev_id = "754281419"
+chatter = 754281419
 
 my_id = '545067517'
 version = 5.199
 domain = 'strongmennewschool'
+
+processed_messages = set() 
 
 a = 0
 while True:
@@ -21,12 +23,13 @@ while True:
         'https://api.vk.com/method/messages.getHistory',
         params={
             'access_token': another_token,
-            'count': 7,
+            'count': 15,
             'user_id': zhitenev_id,
             'rev': 0,
             'v': version
         }
     )
+    
     response_json = messages.json()
 
     if 'error' in response_json:
@@ -36,6 +39,14 @@ while True:
         
 
         for item in items:
+            message_id = item.get('id', '')
+            
+            if message_id in processed_messages:
+                print("Message already processed")
+                break
+            processed_messages.add(message_id) 
+
+
             text = item.get('text', '')  
             message_from = item.get('from_id', '')   
             type_message = item.get('type', '') 
@@ -51,23 +62,23 @@ while True:
                     completion_audio = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo-0613",
                     messages=[
-                    {"role": "system", "content": "Сыграй роль аегриссивного подростка с улиц живущего по понятиям тупого и текст пиши короче"},
+                    {"role": "system", "content": "Сыграй роль аегриссивного мужика с улиц живущего по понятиям тупого и текст пиши сообщения короче"},
                     {"role": "user", "content": transcript_message},
                     ]
                     )
                     ready_audio_message = completion_audio.choices[0].message.content
                     print(completion_audio.choices[0].message.content)
 
-                    finally_audio_message = requests.get(
-                    'https://api.vk.com/method/messages.send',
-                    params={
-                    'access_token': another_token,
-                    'user_id': zhitenev_id,
-                    'random_id': 0,
-                    'message':ready_audio_message,
-                    'v': version
-                    }
-                    )
+                    # finally_audio_message = requests.get(
+                    # 'https://api.vk.com/method/messages.send',
+                    # params={
+                    # 'access_token': another_token,
+                    # 'user_id': zhitenev_id,
+                    # 'random_id': 0,
+                    # 'message':ready_audio_message, 
+                    # 'v': version
+                    # }
+                    # )
                 break
                     
       
@@ -78,7 +89,7 @@ while True:
                 completion = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo-0613",
                     messages=[
-                    {"role": "system", "content": "Сыграй роль аегриссивного подростка с улиц живущего по понятиям тупого и текст пиши короче"},
+                    {"role": "system", "content": "Сыграй роль аегриссивного мужика с улиц живущего по понятиям тупого и текст пиши сообщения короче"},
                     {"role": "user", "content": text},
                     ]
                     )
@@ -166,4 +177,4 @@ while True:
     # )
     a = a + 1
     print('круг пройден:', a )
-    time.sleep(130)  
+    time.sleep(15)  
