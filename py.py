@@ -8,8 +8,8 @@ another_token = 'vk1.a.3BiiZapxozlBzfZ5yqDehmpybegWGIa6aJOHX5lPSDSfcYDk2xh7QmQO_
 openai.api_key = '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'
 promt = "Hi"
 
-zhitenev_id = "754281419"
-chatter = 754281419
+zhitenev_id = "331377292"
+chatter = 331377292
 
 my_id = '545067517'
 version = 5.199
@@ -42,7 +42,7 @@ while True:
             message_id = item.get('id', '')
             
             if message_id in processed_messages:
-                print("Message already processed")
+                print("Сообщение уже обработано")
                 break
             processed_messages.add(message_id) 
 
@@ -83,7 +83,7 @@ while True:
                     
       
             if message_from == chatter and text != "":
-                print(message_from)
+                print("Сообщение от жертвы", message_from)
                 print(text)
             
                 completion = openai.ChatCompletion.create(
@@ -102,7 +102,8 @@ while True:
                 'user_id': zhitenev_id,
                 'random_id': 0,
                 'message':ready_message,
-                'v': version
+                'v': version,
+                'reply_to': message_id
                 }
                     )
                 break
@@ -176,6 +177,6 @@ while True:
      
     # )
     a = a + 1
-    time_value = random.randint(5, 100)
-    print('круг пройден:', a )
+    time_value = random.randint(5, 160)
+    print('Круг пройден:', a )
     time.sleep(time_value)  
