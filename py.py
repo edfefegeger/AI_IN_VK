@@ -8,8 +8,8 @@ another_token = 'vk1.a.3BiiZapxozlBzfZ5yqDehmpybegWGIa6aJOHX5lPSDSfcYDk2xh7QmQO_
 openai.api_key = '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'
 promt = "Hi"
 
-zhitenev_id = "331377292"
-chatter = 331377292
+zhitenev_id = "754281419"
+chatter = 754281419
 
 my_id = '545067517'
 version = 5.199
@@ -69,20 +69,34 @@ while True:
                     ready_audio_message = completion_audio.choices[0].message.content
                     print(completion_audio.choices[0].message.content)
 
-                    # finally_audio_message = requests.get(
-                    # 'https://api.vk.com/method/messages.send',
-                    # params={
-                    # 'access_token': another_token,
-                    # 'user_id': zhitenev_id,
-                    # 'random_id': 0,
-                    # 'message':ready_audio_message, 
-                    # 'v': version
-                    # }
-                    # )
+                    finally_audio_message = requests.get(
+                    'https://api.vk.com/method/messages.send',
+                    params={
+                    'access_token': another_token,
+                    'user_id': zhitenev_id,
+                    'random_id': 0,
+                    'message':ready_audio_message, 
+                    'reply_to': message_id,
+                    'v': version
+                    }
+                    )
                 break
                     
       
-            if message_from == chatter and text != "":
+            if message_from == chatter and text != "" :
+                if text == "" and type_message != 'audio_message':
+                                    finally_message_404 = requests.get(
+                                            'https://api.vk.com/method/messages.send',
+                                            params={
+                                            'access_token': another_token,
+                                            'user_id': zhitenev_id,
+                                            'random_id': 0,
+                                            'attachment': "photo 754281419_754281419"
+                                            'v': version,
+                                            'reply_to': message_id
+                                            }
+                                                )
+                
                 print("Сообщение от жертвы", message_from)
                 print(text)
             
