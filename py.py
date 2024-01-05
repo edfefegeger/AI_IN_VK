@@ -8,8 +8,8 @@ another_token = 'vk1.a.3BiiZapxozlBzfZ5yqDehmpybegWGIa6aJOHX5lPSDSfcYDk2xh7QmQO_
 openai.api_key = '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'
 promt = "Hi"
 
-zhitenev_id = "754281419"
-chatter = 754281419
+zhitenev_id = "386449723"
+chatter = 386449723
 
 my_id = '545067517'
 version = 5.199
@@ -54,7 +54,21 @@ while True:
 
             for attachment in attachments:
                 type_mes = attachment.get('type', '')
-                print("Attachment Type:", type_mes)  
+                print("Attachment Type:", type_mes)
+
+                # if type_mes == 'wall':
+                #     finally_message_404 = requests.get(
+                #             'https://api.vk.com/method/messages.send',
+                #             params={
+                #             'access_token': another_token,
+                #             'user_id': zhitenev_id,
+                #             'random_id': 0,
+                #             'attachment': "photo""754281419""754281419",
+                #             'v': version,
+                #             'reply_to': message_id
+                #             }
+                #                 )
+                #     break  
 
                 if type_mes == 'audio_message':
                     transcript_message = attachment.get('audio_message', {}).get('transcript', '')
@@ -82,20 +96,9 @@ while True:
                     )
                 break
                     
-      
+
             if message_from == chatter and text != "" :
-                if text == "" and type_message != 'audio_message':
-                                    finally_message_404 = requests.get(
-                                            'https://api.vk.com/method/messages.send',
-                                            params={
-                                            'access_token': another_token,
-                                            'user_id': zhitenev_id,
-                                            'random_id': 0,
-                                            'attachment': "photo 754281419_754281419",
-                                            'v': version,
-                                            'reply_to': message_id
-                                            }
-                                                )
+
                 
                 print("Сообщение от жертвы", message_from)
                 print(text)
