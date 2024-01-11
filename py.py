@@ -192,6 +192,6 @@ while True:
      
     # )
     a = a + 1
-    time_value = random.randint(5, 30)
+    time_value = random.randint(5, 80)
     print('Круг пройден:', a )
     time.sleep(time_value)  
