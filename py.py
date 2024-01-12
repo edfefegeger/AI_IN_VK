@@ -6,11 +6,10 @@ import os
 
 with open('DATA') as r:
     another_token = r.readline().strip()
-    openai.api_key = r.readline().strip()
-
+   
 id_caught = int(input("Введите id жертвы: "))
 id_caught2 = int(input("Введите id второй жертвы: "))
-
+openai.api_key = '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'
 zhitenev_id = id_caught
 chatter = id_caught
 zhitenev_id2 = id_caught2
