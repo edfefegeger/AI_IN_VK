@@ -4,7 +4,6 @@ import openai
 import random
 import os
 
-
 with open('DATA') as r:
     another_token = r.readline().strip()
     openai.api_key = r.readline().strip()
