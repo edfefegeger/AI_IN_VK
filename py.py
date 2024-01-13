@@ -25,7 +25,12 @@ a = 0
 count = 0
 conversation = [{"role": "system", "content":  promt}] 
 conversation2 = [{"role": "system", "content":  promt}] 
+
+start = time.time()
+minutes = 0
 while True:
+
+
     messages = requests.get(
         'https://api.vk.com/method/messages.getHistory',
         params={
@@ -303,6 +308,14 @@ while True:
      
     # )
     a = a + 1
-    time_value = random.randint(5, 80)
+    finish = time.time()
+
+    if finish - start >= 60:
+        minutes += 1
+        finish = start + 60
+
+        
+    print('Прошло:', minutes, 'минут ''и', finish - start, 'секунд')
+    time_value = random.randint(5,10)
     print('Круг пройден:', a )
     time.sleep(time_value)  
