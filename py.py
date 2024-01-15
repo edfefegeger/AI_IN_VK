@@ -83,11 +83,25 @@ while True:
                             'user_id': zhitenev_id,
                             'random_id': 0,
                             'attachment': "photo545067517_457254536",
+                            'message': "Хуета ебаная",
                             'v': version,
                             'reply_to': message_id
                             }
                                 )
                     break  
+                if type_mes == 'story':
+                    finally_message_404 = requests.get(
+                            'https://api.vk.com/method/messages.send',
+                            params={
+                            'access_token': another_token,
+                            'user_id': zhitenev_id,
+                            'random_id': 0,
+                            'attachment': "photo545067517_457254537",
+                            'v': version,
+                            'reply_to': message_id
+                            }
+                                )
+                    break                
 
                 if type_mes == 'audio_message':
                     transcript_message = attachment.get('audio_message', {}).get('transcript', '')
