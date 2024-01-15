@@ -10,6 +10,7 @@ with open('DATA') as r:
     
 id_caught = int(input("Введите id жертвы: "))
 id_caught2 = int(input("Введите id второй жертвы: "))
+
 zhitenev_id = id_caught
 chatter = id_caught
 zhitenev_id2 = id_caught2
@@ -74,19 +75,19 @@ while True:
                 type_mes = attachment.get('type', '')
                 print("Attachment Type:", type_mes)
 
-                # if type_mes == 'wall':
-                #     finally_message_404 = requests.get(
-                #             'https://api.vk.com/method/messages.send',
-                #             params={
-                #             'access_token': another_token,
-                #             'user_id': zhitenev_id,
-                #             'random_id': 0,
-                #             'attachment': "photo""754281419""754281419",
-                #             'v': version,
-                #             'reply_to': message_id
-                #             }
-                #                 )
-                #     break  
+                if type_mes == 'wall':
+                    finally_message_404 = requests.get(
+                            'https://api.vk.com/method/messages.send',
+                            params={
+                            'access_token': another_token,
+                            'user_id': zhitenev_id,
+                            'random_id': 0,
+                            'attachment': "photo545067517_457254536",
+                            'v': version,
+                            'reply_to': message_id
+                            }
+                                )
+                    break  
 
                 if type_mes == 'audio_message':
                     transcript_message = attachment.get('audio_message', {}).get('transcript', '')
@@ -310,6 +311,7 @@ while True:
     a = a + 1
     finish = time.time()
     seconds = int(finish - start)
+
     if seconds >= 60:
         minutes += 1
         seconds -= 60
@@ -317,6 +319,6 @@ while True:
 
         
     print('Прошло:', minutes, 'минут ''и', seconds, 'секунд')
-    time_value = random.randint(5,15)
+    time_value = random.randint(15,85)
     print('Круг пройден:', a )
     time.sleep(time_value)  
