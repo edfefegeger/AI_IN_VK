@@ -35,7 +35,7 @@ while True:
         'https://api.vk.com/method/messages.getHistory',
         params={
             'access_token': another_token,
-            'count': 15,
+            'count': 25,
             'user_id': zhitenev_id,
             'rev': 0,
             'v': version
@@ -309,13 +309,14 @@ while True:
     # )
     a = a + 1
     finish = time.time()
-
-    if finish - start >= 60:
+    seconds = int(finish - start)
+    if seconds >= 60:
         minutes += 1
-        finish = start + 60
+        seconds -= 60
+        start += 60
 
         
-    print('Прошло:', minutes, 'минут ''и', finish - start, 'секунд')
-    time_value = random.randint(5,10)
+    print('Прошло:', minutes, 'минут ''и', seconds, 'секунд')
+    time_value = random.randint(5,15)
     print('Круг пройден:', a )
     time.sleep(time_value)  
