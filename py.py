@@ -2,8 +2,11 @@ import requests
 import time
 import openai
 import random
-import os
-import sys
+from art import tprint
+tprint("Ai_in_Vk")
+tprint("WELCOME")
+
+
 with open('DATA') as r:
     another_token = r.readline().strip()
     openai.api_key = r.readline().strip()
@@ -25,8 +28,6 @@ def log_and_print(*messages):
     with open('LOGS', 'a') as f:
         f.write(formatted_message + '\n')
 
-    
-
 processed_messages = set() 
 processed_messages2 = set() 
 a = 0
@@ -38,6 +39,17 @@ conversation2 = [{"role": "system", "content":  promt}]
 start = time.time()
 minutes = 0
 while True:
+      user_input = input("Введите 'q' для остановки приложения")
+
+      if user_input.lower() == 'q':
+        log_and_print("Программа остановлена по запросу пользователя.")
+        
+        resume_input = input("Введите 's' для возобновления: ")
+        if resume_input.lower() == 's':
+            log_and_print("Программа возобновлена.")
+            continue
+        
+        
       messages = requests.get(
           'https://api.vk.com/method/messages.getHistory',
           params={
@@ -256,7 +268,7 @@ while True:
           start = time.time() 
       log_and_print('Прошло: {} минут и {} секунд'.format(minutes, seconds))
 
-      time_value = random.randint(15, time_end)
+      time_value = random.randint(12, time_end)
       log_and_print('Круг пройден: {}'.format(a))
 
 
