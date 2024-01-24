@@ -39,16 +39,18 @@ conversation2 = [{"role": "system", "content":  promt}]
 start = time.time()
 minutes = 0
 while True:
-      user_input = input("Введите 'q' для остановки приложения")
 
-      if user_input.lower() == 'q':
-        log_and_print("Программа остановлена по запросу пользователя.")
-        
-        resume_input = input("Введите 's' для возобновления: ")
-        if resume_input.lower() == 's':
-            log_and_print("Программа возобновлена.")
-            continue
-        
+      get_long_poll = requests.get(
+           'https://api.vk.com/method/messages.getLongPollServer',
+           params={
+               'access_token': another_token,
+               'v': version
+           }
+      )
+      
+      response_json_ts = get_long_poll.json()
+      ts = response_json_ts.get('response', {}).get('ts', [])
+      print(ts)
         
       messages = requests.get(
           'https://api.vk.com/method/messages.getHistory',
