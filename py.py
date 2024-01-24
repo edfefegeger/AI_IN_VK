@@ -48,7 +48,7 @@ get_long_poll = requests.get(
 
 response_json_ts = get_long_poll.json()
 ts = response_json_ts.get('response', {}).get('ts', [])
-print(ts)
+log_and_print("ts:", ts)
 
 
 while True:
@@ -64,24 +64,24 @@ while True:
       message_count = long_poll_history.get('response', {}).get('messages', '')
       message_conv = long_poll_history.get('response', {}).get('conversations', [])
       message_count2 = message_count.get('count', '')
-      print(message_count2)
+      log_and_print("Количество сообщений:", message_count2)
 
       if message_count2 != 0 :
           if id_caught != message_conv[0].get('peer', {}).get('id', ''):
             user_texter = message_conv[0].get('peer', {}).get('id', '')         
-            print("Первый",user_texter)
+            log_and_print("Первый найден",user_texter)
             id_caught = user_texter
             zhitenev_id = id_caught
             chatter = id_caught
             ischatter = True
 
-            if len(message_conv) >= 1:
+            if len(message_conv) >= 1.5:
                 user_texter2 = True
 
-      if user_texter2 != None:
+      if len(message_conv) > 1:
           if id_caught2 != message_conv[1].get('peer', {}).get('id', ''):
             user_texter2 = message_conv[1].get('peer', {}).get('id', '')         
-            print("Второй",user_texter2)
+            log_and_print("Второй найден",user_texter2)
             id_caught2 = user_texter2
             zhitenev_id2 = id_caught2
             chatter2 = id_caught2
