@@ -38,20 +38,39 @@ conversation = [{"role": "system", "content":  promt}]
 conversation2 = [{"role": "system", "content":  promt}] 
 start = time.time()
 minutes = 0
-while True:
 
-      get_long_poll = requests.get(
-           'https://api.vk.com/method/messages.getLongPollServer',
-           params={
-               'access_token': another_token,
-               'v': version
-           }
-      )
-      
-      response_json_ts = get_long_poll.json()
-      ts = response_json_ts.get('response', {}).get('ts', [])
-      print(ts)
-        
+
+get_long_poll = requests.get(
+         'https://api.vk.com/method/messages.getLongPollServer',
+         params={
+             'access_token': another_token,
+             'v': version
+         }
+    )
+
+response_json_ts = get_long_poll.json()
+ts = response_json_ts.get('response', {}).get('ts', [])
+print(ts)
+
+
+while True:
+      long_poll = requests.get(
+        'https://api.vk.com/method/messages.getLongPollHistory',
+        params={
+            'access_token': another_token,
+            'ts': ts,
+            'v': version
+        }
+    )
+      long_poll_history = long_poll.json()
+      message_count = long_poll_history.get('response', {}).get('messages', '')
+      message_count2 = message_count.get('count', '')
+      print(message_count2)
+
+      if message_count2 != 0:
+          user_texter = message_count.get('items', '')[0].get('from_id', '')
+          print(user_texter)
+
       messages = requests.get(
           'https://api.vk.com/method/messages.getHistory',
           params={
