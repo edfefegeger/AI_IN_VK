@@ -10,16 +10,11 @@ tprint("WELCOME")
 with open('DATA') as r:
     another_token = r.readline().strip()
     openai.api_key = r.readline().strip()
-    id_caught = int(r.readline().strip())
-    id_caught2 = int(r.readline().strip())
     promt = r.readline().strip()
     version = r.readline().strip()
     time_end = int(r.readline().strip())
 
-zhitenev_id = id_caught
-chatter = id_caught
-zhitenev_id2 = id_caught2
-chatter2 = id_caught2
+
 my_id = '545067517'
 domain = 'strongmennewschool'
 def log_and_print(*messages):
@@ -41,7 +36,8 @@ minutes = 0
 ischatter = None
 ischatter2 = None
 user_texter2 = None
-
+id_caught = None
+id_caught2 = None
 get_long_poll = requests.get(
          'https://api.vk.com/method/messages.getLongPollServer',
          params={
@@ -60,7 +56,7 @@ while True:
         'https://api.vk.com/method/messages.getLongPollHistory',
         params={
             'access_token': another_token,
-            'ts': '1878120533',
+            'ts': ts,
             'v': version
         }
     )
@@ -78,8 +74,8 @@ while True:
             zhitenev_id = id_caught
             chatter = id_caught
             ischatter = True
-            
-            if message_conv[0].get('peer', {}).get('id', '') != None:
+
+            if len(message_conv) >= 1:
                 user_texter2 = True
 
       if user_texter2 != None:
@@ -196,7 +192,7 @@ while True:
                     }
                         )
                     break
-      if id_caught2 != 0:
+      if ischatter2 == True:
           messages = requests.get(
               'https://api.vk.com/method/messages.getHistory',
               params={
