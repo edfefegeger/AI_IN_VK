@@ -68,113 +68,118 @@ while True:
       print(message_count2)
 
       if message_count2 != 0:
-          user_texter = message_count.get('items', '')[0].get('from_id', '')
+          user_texter = message_count.get('items', '')[0].get('from_id', '')         
           print(user_texter)
-
-      messages = requests.get(
-          'https://api.vk.com/method/messages.getHistory',
-          params={
-              'access_token': another_token,
-              'count': 25,
-              'user_id': zhitenev_id,
-              'rev': 0,
-              'v': version
-          }
-      )
-      response_json = messages.json()
-      if 'error' in response_json:
-          log_and_print(f"Error from VK API: {response_json['error']['error_msg']}")
-      else:
-          items = response_json.get('response', {}).get('items', [])
-          for item in items:
-              message_id = item.get('id', '')
-              if message_id in processed_messages:
-                  log_and_print("Сообщение уже обработано")
-                  break
-              processed_messages.add(message_id) 
-              text = item.get('text', '')  
-              if count == 0:
-                  conversation.append({"role": "user", "content": text})
-                  count += 1
-              message_from = item.get('from_id', '')   
-              type_message = item.get('type', '') 
-              attachments = item.get('attachments', []) 
-              for attachment in attachments:
-                  type_mes = attachment.get('type', '')
-                  log_and_print("Тип Вложения:", type_mes)
-                  if message_from == chatter and type_mes == 'wall':
-                      finally_message_404 = requests.get(
-                              'https://api.vk.com/method/messages.send',
-                              params={
-                              'access_token': another_token,
-                              'user_id': zhitenev_id,
-                              'random_id': 0,
-                              'attachment': "photo545067517_457254536",
-                              'message': "Хуета ебаная",
-                              'v': version,
-                              'reply_to': message_id
-                              }
-                                  )
-                      break  
-                  if message_from == chatter and type_mes == 'story':
-                      finally_message_404 = requests.get(
-                              'https://api.vk.com/method/messages.send',
-                              params={
-                              'access_token': another_token,
-                              'user_id': zhitenev_id,
-                              'random_id': 0,
-                              'attachment': "photo545067517_457254537",
-                              'v': version,
-                              'reply_to': message_id
-                              }
-                                  )
-                      break
-                  
-                  if message_from == chatter and type_mes == 'audio_message' and text != "" :
-                      transcript_message = attachment.get('audio_message', {}).get('transcript', '')
-                      log_and_print("Сообщение от жертвы", message_from)
-                      log_and_print(transcript_message)
-                      conversation.append({"role": "user", "content": transcript_message})
-                      completion_audio = openai.ChatCompletion.create(
-                      model="gpt-3.5-turbo-0613",
-                      messages=conversation + [{"role": "user", "content": transcript_message}]
-                      )
-                      ready_audio_message = completion_audio.choices[0].message.content
-                      log_and_print("Ответ GPT:", completion_audio.choices[0].message.content)
-                      finally_audio_message = requests.get(
-                      'https://api.vk.com/method/messages.send',
-                      params={
-                      'access_token': another_token,
-                      'user_id': zhitenev_id,
-                      'random_id': 0,
-                      'message':ready_audio_message, 
-                      'reply_to': message_id,
-                      'v': version
-                      }
-                      )
-                  break
-              if message_from == chatter and text != "" :              
-                  log_and_print("Сообщение от жертвы", message_from)
-                  log_and_print(text)
-                  conversation.append({"role": "user", "content": text })
-                  completion = openai.ChatCompletion.create(
-                      model="gpt-3.5-turbo-0613",
-                      messages=conversation + [{"role": "user", "content": text}]
-                      )
-                  ready_message = completion.choices[0].message.content
-                  log_and_print("Ответ GPT:", completion.choices[0].message.content)
-                  finally_message = requests.get(
-                  'https://api.vk.com/method/messages.send',
-                  params={
-                  'access_token': another_token,
-                  'user_id': zhitenev_id,
-                  'random_id': 0,
-                  'message':ready_message,
-                  'v': version,
-                  'reply_to': message_id
-                  }
-                      )
-                  break
+          id_caught = user_texter
+          zhitenev_id = id_caught
+          chatter = id_caught
+          ischatter = True
+          
+      if ischatter == True:          
+        messages = requests.get(
+            'https://api.vk.com/method/messages.getHistory',
+            params={
+                'access_token': another_token,
+                'count': 25,
+                'user_id': zhitenev_id,
+                'rev': 0,
+                'v': version
+            }
+        )
+        response_json = messages.json()
+        if 'error' in response_json:
+            log_and_print(f"Error from VK API: {response_json['error']['error_msg']}")
+        else:
+            items = response_json.get('response', {}).get('items', [])
+            for item in items:
+                message_id = item.get('id', '')
+                if message_id in processed_messages:
+                    log_and_print("Сообщение уже обработано")
+                    break
+                processed_messages.add(message_id) 
+                text = item.get('text', '')  
+                if count == 0:
+                    conversation.append({"role": "user", "content": text})
+                    count += 1
+                message_from = item.get('from_id', '')   
+                type_message = item.get('type', '') 
+                attachments = item.get('attachments', []) 
+                for attachment in attachments:
+                    type_mes = attachment.get('type', '')
+                    log_and_print("Тип Вложения:", type_mes)
+                    if message_from == chatter and type_mes == 'wall':
+                        finally_message_404 = requests.get(
+                                'https://api.vk.com/method/messages.send',
+                                params={
+                                'access_token': another_token,
+                                'user_id': zhitenev_id,
+                                'random_id': 0,
+                                'attachment': "photo545067517_457254536",
+                                'message': "Хуета ебаная",
+                                'v': version,
+                                'reply_to': message_id
+                                }
+                                    )
+                        break  
+                    if message_from == chatter and type_mes == 'story':
+                        finally_message_404 = requests.get(
+                                'https://api.vk.com/method/messages.send',
+                                params={
+                                'access_token': another_token,
+                                'user_id': zhitenev_id,
+                                'random_id': 0,
+                                'attachment': "photo545067517_457254537",
+                                'v': version,
+                                'reply_to': message_id
+                                }
+                                    )
+                        break
+                      
+                    if message_from == chatter and type_mes == 'audio_message' and text != "" :
+                        transcript_message = attachment.get('audio_message', {}).get('transcript', '')
+                        log_and_print("Сообщение от жертвы", message_from)
+                        log_and_print(transcript_message)
+                        conversation.append({"role": "user", "content": transcript_message})
+                        completion_audio = openai.ChatCompletion.create(
+                        model="gpt-3.5-turbo-0613",
+                        messages=conversation + [{"role": "user", "content": transcript_message}]
+                        )
+                        ready_audio_message = completion_audio.choices[0].message.content
+                        log_and_print("Ответ GPT:", completion_audio.choices[0].message.content)
+                        finally_audio_message = requests.get(
+                        'https://api.vk.com/method/messages.send',
+                        params={
+                        'access_token': another_token,
+                        'user_id': zhitenev_id,
+                        'random_id': 0,
+                        'message':ready_audio_message, 
+                        'reply_to': message_id,
+                        'v': version
+                        }
+                        )
+                    break
+                if message_from == chatter and text != "" :              
+                    log_and_print("Сообщение от жертвы", message_from)
+                    log_and_print(text)
+                    conversation.append({"role": "user", "content": text })
+                    completion = openai.ChatCompletion.create(
+                        model="gpt-3.5-turbo-0613",
+                        messages=conversation + [{"role": "user", "content": text}]
+                        )
+                    ready_message = completion.choices[0].message.content
+                    log_and_print("Ответ GPT:", completion.choices[0].message.content)
+                    finally_message = requests.get(
+                    'https://api.vk.com/method/messages.send',
+                    params={
+                    'access_token': another_token,
+                    'user_id': zhitenev_id,
+                    'random_id': 0,
+                    'message':ready_message,
+                    'v': version,
+                    'reply_to': message_id
+                    }
+                        )
+                    break
       if id_caught2 != 0:
           messages = requests.get(
               'https://api.vk.com/method/messages.getHistory',
