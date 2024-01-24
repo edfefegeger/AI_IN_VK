@@ -38,6 +38,8 @@ conversation = [{"role": "system", "content":  promt}]
 conversation2 = [{"role": "system", "content":  promt}] 
 start = time.time()
 minutes = 0
+ischatter = None
+ischatter2 = None
 
 
 get_long_poll = requests.get(
@@ -67,13 +69,16 @@ while True:
       message_count2 = message_count.get('count', '')
       print(message_count2)
 
-      if message_count2 != 0:
-          user_texter = message_count.get('items', '')[0].get('from_id', '')         
-          print(user_texter)
-          id_caught = user_texter
-          zhitenev_id = id_caught
-          chatter = id_caught
-          ischatter = True
+      if message_count2 != 0 :
+          if id_caught != message_count.get('items', '')[0].get('from_id', ''):
+            user_texter = message_count.get('items', '')[0].get('from_id', '')         
+            print(user_texter)
+            id_caught = user_texter
+            zhitenev_id = id_caught
+            chatter = id_caught
+            ischatter = True
+          else:
+            ischatter2 = True
           
       if ischatter == True:          
         messages = requests.get(
