@@ -60,12 +60,15 @@ while True:
         'https://api.vk.com/method/messages.getLongPollHistory',
         params={
             'access_token': another_token,
-            'ts': ts,
+            'ts': '1878120533',
             'v': version
         }
     )
       long_poll_history = long_poll.json()
       message_count = long_poll_history.get('response', {}).get('messages', '')
+      message_conv = long_poll_history.get('response', {}).get('conversations', [])
+      message_conv2 = message_conv[1].get('peer', {}).get('id', '')
+      print(message_conv2)
       message_count2 = message_count.get('count', '')
       print(message_count2)
 
