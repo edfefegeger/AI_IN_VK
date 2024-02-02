@@ -86,7 +86,7 @@ while not paused:
           if id_caught != message_conv[0].get('peer', {}).get('id', ''):
             user_texter = message_conv[0].get('peer', {}).get('id', '')
             user_typer = message_conv[0].get('peer', {}).get('type', '')     
-            log_and_print("Первый найден",user_texter, user_typer)
+            
             id_caught = user_texter
             zhitenev_id = id_caught
             chatter = id_caught
@@ -99,13 +99,14 @@ while not paused:
           if id_caught2 != message_conv[1].get('peer', {}).get('id', ''):
             user_texter2 = message_conv[1].get('peer', {}).get('id', '')
             user_typer2 = message_conv[1].get('peer', {}).get('type', '')           
-            log_and_print("Второй найден",user_texter2, user_typer2)
+            
             id_caught2 = user_texter2
             zhitenev_id2 = id_caught2
             chatter2 = id_caught2
             ischatter2 = True
           
-      if ischatter == True and user_typer == 'user':        
+      if ischatter == True and user_typer == 'user':    
+        log_and_print("Первый найден",user_texter, user_typer)    
         messages = requests.get(
             'https://api.vk.com/method/messages.getHistory',
             params={
@@ -206,7 +207,7 @@ while not paused:
                             }
                             )
                         except openai.error.APIError as e:
-                            log_and_print("Ошибка от  OpeanAI, Включите VPN")    
+                            log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")    
                             break
                     break
                 if message_from == chatter and text != "" :              
@@ -232,10 +233,11 @@ while not paused:
                         }
                             )
                     except openai.error.APIError as e:
-                        log_and_print("Ошибка от  OpeanAI, Включите VPN")   
+                        log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")
                         break
                     break
       if ischatter2 == True and user_typer2 == 'user':
+          log_and_print("Второй найден",user_texter2, user_typer2)
           messages = requests.get(
               'https://api.vk.com/method/messages.getHistory',
               params={
@@ -322,7 +324,7 @@ while not paused:
                             }
                             )
                           except openai.error.APIError as e:
-                            log_and_print("Ошибка от  OpeanAI, Включите VPN")  
+                            log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")
                             break
 
                           break 
@@ -364,7 +366,7 @@ while not paused:
                         }
                             )
                       except openai.error.APIError as e:
-                        log_and_print("Ошибка от  OpeanAI, Включите VPN")  
+                        log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")  
                         break  
                       break
       a = a + 1
