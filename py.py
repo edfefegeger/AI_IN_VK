@@ -3,6 +3,7 @@ import requests
 import time
 import openai
 import random
+import keyboard
 from art import tprint
 tprint("Ai_in_Vk") 
 tprint("WELCOME")
@@ -18,6 +19,20 @@ with open("DATA.ini", 'r', encoding='utf-8') as r:
 
 my_id = '545067517'
 domain = 'strongmennewschool'
+def toggle_pause():
+    global paused
+    paused = not paused
+    if paused:
+        log_and_print("Программа приостановлена. Нажмите S для продолжения.")
+    else:
+        log_and_print("Программа возобновлена.")
+
+
+paused = False
+
+keyboard.add_hotkey('q', toggle_pause)
+
+
 def log_and_print(*messages):
     formatted_message = ' '.join(map(str, messages))
     print(formatted_message)
@@ -52,7 +67,7 @@ ts = response_json_ts.get('response', {}).get('ts', [])
 log_and_print("ts:", ts)
 
 
-while True:
+while not paused:
       long_poll = requests.get(
         'https://api.vk.com/method/messages.getLongPollHistory',
         params={
@@ -69,8 +84,9 @@ while True:
 
       if message_count2 != 0 :
           if id_caught != message_conv[0].get('peer', {}).get('id', ''):
-            user_texter = message_conv[0].get('peer', {}).get('id', '')         
-            log_and_print("Первый найден",user_texter)
+            user_texter = message_conv[0].get('peer', {}).get('id', '')
+            user_typer = message_conv[0].get('peer', {}).get('type', '')     
+            log_and_print("Первый найден",user_texter, user_typer)
             id_caught = user_texter
             zhitenev_id = id_caught
             chatter = id_caught
@@ -81,14 +97,15 @@ while True:
 
       if len(message_conv) > 1:
           if id_caught2 != message_conv[1].get('peer', {}).get('id', ''):
-            user_texter2 = message_conv[1].get('peer', {}).get('id', '')         
-            log_and_print("Второй найден",user_texter2)
+            user_texter2 = message_conv[1].get('peer', {}).get('id', '')
+            user_typer2 = message_conv[1].get('peer', {}).get('type', '')           
+            log_and_print("Второй найден",user_texter2, user_typer2)
             id_caught2 = user_texter2
             zhitenev_id2 = id_caught2
             chatter2 = id_caught2
             ischatter2 = True
           
-      if ischatter == True:          
+      if ischatter == True and user_typer == 'user':        
         messages = requests.get(
             'https://api.vk.com/method/messages.getHistory',
             params={
@@ -210,7 +227,7 @@ while True:
                     }
                         )
                     break
-      if ischatter2 == True:
+      if ischatter2 == True and user_typer2 == 'user':
           messages = requests.get(
               'https://api.vk.com/method/messages.getHistory',
               params={
@@ -345,6 +362,14 @@ while True:
 
       time_value = random.randint(12, time_end)
       log_and_print('Круг пройден: {}'.format(a))
+
+      if paused == True:
+          keyboard.wait('s')
+          while paused == True:
+              time.sleep(5)
+              if keyboard.is_pressed('q'):
+                  toggle_pause()
+              
 
 
       time.sleep(time_value)  
