@@ -1,13 +1,14 @@
+from operator import floordiv
 import requests
 import time
 import openai
 import random
 from art import tprint
-tprint("Ai_in_Vk")
+tprint("Ai_in_Vk") 
 tprint("WELCOME")
 
 
-with open('DATA') as r:
+with open("DATA.ini", 'r', encoding='utf-8') as r:
     another_token = r.readline().strip()
     openai.api_key = r.readline().strip()
     promt = r.readline().strip()
@@ -20,7 +21,7 @@ domain = 'strongmennewschool'
 def log_and_print(*messages):
     formatted_message = ' '.join(map(str, messages))
     print(formatted_message)
-    with open('LOGS', 'a') as f:
+    with open("LOGS.log", 'a', encoding='utf-8') as f:
         f.write(formatted_message + '\n')
 
 processed_messages = set() 
@@ -300,11 +301,17 @@ while True:
       a = a + 1
       finish = time.time()
       seconds = int(finish - start)
-      if seconds >= 60:
-          minutes += 1
-          seconds -= 60
-          start = time.time() 
-      log_and_print('Прошло: {} минут и {} секунд'.format(minutes, seconds))
+    #   if seconds >= 60:
+    #       minutes += 1
+    #       seconds -= 60
+    #       start = time.time() 
+
+      minutes = floordiv(seconds, 60)
+      hours = floordiv(minutes, 60)
+      if minutes >= 60:
+          minutes = 0
+
+      log_and_print('Прошло: {} часов и {} минут'.format(hours,minutes))
 
       time_value = random.randint(12, time_end)
       log_and_print('Круг пройден: {}'.format(a))
