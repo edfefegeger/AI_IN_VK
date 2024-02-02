@@ -186,46 +186,54 @@ while not paused:
                         transcript_message = attachment.get('audio_message', {}).get('transcript', '')
                         log_and_print("Сообщение от жертвы", message_from)
                         log_and_print(transcript_message)
-                        conversation.append({"role": "user", "content": transcript_message})
-                        completion_audio = openai.ChatCompletion.create(
-                        model="gpt-3.5-turbo-0613",
-                        messages=conversation + [{"role": "user", "content": transcript_message}]
-                        )
-                        ready_audio_message = completion_audio.choices[0].message.content
-                        log_and_print("Ответ GPT:", completion_audio.choices[0].message.content)
-                        finally_audio_message = requests.get(
+                        try:
+                            conversation.append({"role": "user", "content": transcript_message})
+                            completion_audio = openai.ChatCompletion.create(
+                            model="gpt-3.5-turbo-0613",
+                            messages=conversation + [{"role": "user", "content": transcript_message}]
+                            )
+                            ready_audio_message = completion_audio.choices[0].message.content
+                            log_and_print("Ответ GPT:", completion_audio.choices[0].message.content)
+                            finally_audio_message = requests.get(
+                            'https://api.vk.com/method/messages.send',
+                            params={
+                            'access_token': another_token,
+                            'user_id': zhitenev_id,
+                            'random_id': 0,
+                            'message':ready_audio_message, 
+                            'reply_to': message_id,
+                            'v': version
+                            }
+                            )
+                        except openai.error.APIError as e:
+                            log_and_print("Ошибка от  OpeanAI, Включите VPN")    
+                            break
+                    break
+                if message_from == chatter and text != "" :              
+                    log_and_print("Сообщение от жертвы", message_from)
+                    log_and_print(text)
+                    try:
+                        conversation.append({"role": "user", "content": text })
+                        completion = openai.ChatCompletion.create(
+                            model="gpt-3.5-turbo-0613",
+                            messages=conversation + [{"role": "user", "content": text}]
+                            )
+                        ready_message = completion.choices[0].message.content
+                        log_and_print("Ответ GPT:", completion.choices[0].message.content)
+                        finally_message = requests.get(
                         'https://api.vk.com/method/messages.send',
                         params={
                         'access_token': another_token,
                         'user_id': zhitenev_id,
                         'random_id': 0,
-                        'message':ready_audio_message, 
-                        'reply_to': message_id,
-                        'v': version
+                        'message':ready_message,
+                        'v': version,
+                        'reply_to': message_id
                         }
-                        )
-                    break
-                if message_from == chatter and text != "" :              
-                    log_and_print("Сообщение от жертвы", message_from)
-                    log_and_print(text)
-                    conversation.append({"role": "user", "content": text })
-                    completion = openai.ChatCompletion.create(
-                        model="gpt-3.5-turbo-0613",
-                        messages=conversation + [{"role": "user", "content": text}]
-                        )
-                    ready_message = completion.choices[0].message.content
-                    log_and_print("Ответ GPT:", completion.choices[0].message.content)
-                    finally_message = requests.get(
-                    'https://api.vk.com/method/messages.send',
-                    params={
-                    'access_token': another_token,
-                    'user_id': zhitenev_id,
-                    'random_id': 0,
-                    'message':ready_message,
-                    'v': version,
-                    'reply_to': message_id
-                    }
-                        )
+                            )
+                    except openai.error.APIError as e:
+                        log_and_print("Ошибка от  OpeanAI, Включите VPN")   
+                        break
                     break
       if ischatter2 == True and user_typer2 == 'user':
           messages = requests.get(
@@ -293,24 +301,30 @@ while not paused:
                           transcript_message = attachment.get('audio_message', {}).get('transcript', '')
                           log_and_print("Сообщение от второй жертвы", message_from)
                           log_and_print(transcript_message)
+
                           conversation2.append({"role": "user", "content": transcript_message})
-                          completion_audio = openai.ChatCompletion.create(
-                          model="gpt-3.5-turbo-0613",
-                          messages=conversation2 + [{"role": "user", "content": transcript_message}]
-                          )
-                          ready_audio_message = completion_audio.choices[0].message.content
-                          log_and_print("Ответ GPT:", completion_audio.choices[0].message.content)
-                          finally_audio_message = requests.get(
-                          'https://api.vk.com/method/messages.send',
-                          params={
-                          'access_token': another_token,
-                          'user_id': zhitenev_id2,
-                          'random_id': 0,
-                          'message':ready_audio_message, 
-                          'reply_to': message_id,
-                          'v': version
-                          }
-                          )
+                          try:
+                            completion_audio = openai.ChatCompletion.create(
+                            model="gpt-3.5-turbo-0613",
+                            messages=conversation2 + [{"role": "user", "content": transcript_message}]
+                            )
+                            ready_audio_message = completion_audio.choices[0].message.content
+                            log_and_print("Ответ GPT:", completion_audio.choices[0].message.content)
+                            finally_audio_message = requests.get(
+                            'https://api.vk.com/method/messages.send',
+                            params={
+                            'access_token': another_token,
+                            'user_id': zhitenev_id2,
+                            'random_id': 0,
+                            'message':ready_audio_message, 
+                            'reply_to': message_id,
+                            'v': version
+                            }
+                            )
+                          except openai.error.APIError as e:
+                            log_and_print("Ошибка от  OpeanAI, Включите VPN")  
+                            break
+
                           break 
                       if message_from == chatter and type_mes == 'sticker':
                             log_and_print("Сообщение от второй жертвы", message_from)
@@ -331,23 +345,27 @@ while not paused:
                       log_and_print("Сообщение от второй жертвы", message_from)
                       log_and_print(text)
                       conversation2.append({"role": "user", "content": text })
-                      completion = openai.ChatCompletion.create(
-                          model="gpt-3.5-turbo-0613",
-                          messages=conversation2 + [{"role": "user", "content": text}]
-                          )
-                      ready_message = completion.choices[0].message.content
-                      log_and_print("Ответ GPT:", completion.choices[0].message.content)
-                      finally_message = requests.get(
-                      'https://api.vk.com/method/messages.send',
-                      params={
-                      'access_token': another_token,
-                      'user_id': zhitenev_id2,
-                      'random_id': 0,
-                      'message':ready_message,
-                      'v': version,
-                      'reply_to': message_id
-                      }
-                          )
+                      try:
+                        completion = openai.ChatCompletion.create(
+                            model="gpt-3.5-turbo-0613",
+                            messages=conversation2 + [{"role": "user", "content": text}]
+                            )
+                        ready_message = completion.choices[0].message.content
+                        log_and_print("Ответ GPT:", completion.choices[0].message.content)
+                        finally_message = requests.get(
+                        'https://api.vk.com/method/messages.send',
+                        params={
+                        'access_token': another_token,
+                        'user_id': zhitenev_id2,
+                        'random_id': 0,
+                        'message':ready_message,
+                        'v': version,
+                        'reply_to': message_id
+                        }
+                            )
+                      except openai.error.APIError as e:
+                        log_and_print("Ошибка от  OpeanAI, Включите VPN")  
+                        break  
                       break
       a = a + 1
       finish = time.time()
