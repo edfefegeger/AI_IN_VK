@@ -146,6 +146,19 @@ while True:
                                 'reply_to': message_id
                                 }
                                     )
+                    if message_from == chatter and type_mes == 'sticker':
+                        finally_message_404 = requests.get(
+                                'https://api.vk.com/method/messages.send',
+                                params={
+                                'access_token': another_token,
+                                'user_id': zhitenev_id,
+                                'random_id': 0,
+                                'message': "Не прогрузился, напиши текстом",
+                                'attachment': "doc545067517_623985008",
+                                'v': version,
+                                'reply_to': message_id
+                                }
+                                    )    
                         break
                       
                     if message_from == chatter and type_mes == 'audio_message' and text != "" :
@@ -301,10 +314,6 @@ while True:
       a = a + 1
       finish = time.time()
       seconds = int(finish - start)
-    #   if seconds >= 60:
-    #       minutes += 1
-    #       seconds -= 60
-    #       start = time.time() 
 
       minutes = floordiv(seconds, 60)
       hours = floordiv(minutes, 60)
