@@ -16,7 +16,8 @@ with open("DATA.ini", 'r', encoding='utf-8') as r:
     version = r.readline().strip()
     time_end = int(r.readline().strip())
 
-
+num = True
+num2 = True
 my_id = '545067517'
 domain = 'strongmennewschool'
 def toggle_pause():
@@ -105,8 +106,11 @@ while not paused:
             chatter2 = id_caught2
             ischatter2 = True
           
-      if ischatter == True and user_typer == 'user':    
-        log_and_print("Первый найден",user_texter, user_typer)    
+      if ischatter == True and user_typer == 'user': 
+        if num == True:  
+            log_and_print("Первый найден",user_texter, user_typer)    
+            num = False
+
         messages = requests.get(
             'https://api.vk.com/method/messages.getHistory',
             params={
@@ -237,7 +241,9 @@ while not paused:
                         break
                     break
       if ischatter2 == True and user_typer2 == 'user':
-          log_and_print("Второй найден",user_texter2, user_typer2)
+          if num2 == True:  
+             log_and_print("Второй найден",user_texter, user_typer)    
+             num2 = False
           messages = requests.get(
               'https://api.vk.com/method/messages.getHistory',
               params={
@@ -375,8 +381,10 @@ while not paused:
 
       minutes = floordiv(seconds, 60)
       hours = floordiv(minutes, 60)
+      minutes = seconds // 60
       if minutes >= 60:
           minutes = 0
+
 
       log_and_print('Прошло: {} часов и {} минут'.format(hours,minutes))
 
