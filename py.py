@@ -18,7 +18,7 @@ except:
     
 
 
-with open('DATA') as r:
+with open("DATA.ini", 'r', encoding='utf-8') as r:
     another_token = r.readline().strip()
     openai.api_key = r.readline().strip()
     promt = r.readline().strip()
@@ -31,7 +31,7 @@ domain = 'strongmennewschool'
 def log_and_print(*messages):
     formatted_message = ' '.join(map(str, messages))
     print(formatted_message)
-    with open('LOGS', 'a') as f:
+    with open("LOGS.log", 'a', encoding='utf-8') as f:
         f.write(formatted_message + '\n')
 
 processed_messages = set() 
