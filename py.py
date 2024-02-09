@@ -8,10 +8,18 @@ import subprocess
 
 tprint("Ai_in_Vk")
 tprint("WELCOME")
-command = 'nmcli connection up vpnbook-ca149-tcp80'
 
-config_file_path = "vpnbook-ca149-tcp80.ovpn"
-command2 = '"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command connect vpnbook-fr200-tcp80.ovpn'
+with open("DATA.ini", 'r', encoding='utf-8') as r:
+    another_token = r.readline().strip()
+    openai.api_key = r.readline().strip()
+    promt = r.readline().strip()
+    version = r.readline().strip()
+    time_end = int(r.readline().strip())
+    name_OPENVPN_Linux = r.readline().strip()
+    name_OPENVPN_Win = r.readline().strip()
+
+command = f'nmcli connection up {name_OPENVPN_Linux}'
+command2 = f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command connect {name_OPENVPN_Win}.ovpn'
 
 def log_and_print(*messages):
     formatted_message = ' '.join(map(str, messages))
@@ -35,12 +43,7 @@ if os.name == "nt":
     
 
 
-with open("DATA.ini", 'r', encoding='utf-8') as r:
-    another_token = r.readline().strip()
-    openai.api_key = r.readline().strip()
-    promt = r.readline().strip()
-    version = r.readline().strip()
-    time_end = int(r.readline().strip())
+
 
 
 my_id = '545067517'
