@@ -1,5 +1,4 @@
-__pycache__
+LOGS.log
+__pycache__/
 /build/
 /dist/
-LOGS.log
-
