@@ -4,17 +4,34 @@ import openai
 import random
 from art import tprint
 import os
+import subprocess
 
 tprint("Ai_in_Vk")
 tprint("WELCOME")
-config_file_path = "vpnbook-ca149-tcp80.ovpn"
 command = 'nmcli connection up vpnbook-ca149-tcp80'
-command2 = f"openvpn --config {config_file_path}"
 
-try:
-    os.system(command)
-except:
-    print('VPN не подключен')
+config_file_path = "vpnbook-ca149-tcp80.ovpn"
+command2 = '"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command connect vpnbook-fr200-tcp80.ovpn'
+
+def log_and_print(*messages):
+    formatted_message = ' '.join(map(str, messages))
+    print(formatted_message)
+    with open("LOGS.log", 'a', encoding='utf-8') as f:
+        f.write(formatted_message + '\n')
+
+if os.name == "posix":
+    try:
+        os.system(command)
+        log_and_print("VPN успешно подключен на Linux/Unix.")
+    except:
+        log_and_print("Ошибка при подключении к VPN")
+
+if os.name == "nt":
+    try:
+        subprocess.run(command2, check=True, shell=True)
+        log_and_print("VPN успешно подключен на Windows.")
+    except subprocess.CalledProcessError:
+        log_and_print("Ошибка при подключении к VPN")
     
 
 
@@ -28,11 +45,7 @@ with open("DATA.ini", 'r', encoding='utf-8') as r:
 
 my_id = '545067517'
 domain = 'strongmennewschool'
-def log_and_print(*messages):
-    formatted_message = ' '.join(map(str, messages))
-    print(formatted_message)
-    with open("LOGS.log", 'a', encoding='utf-8') as f:
-        f.write(formatted_message + '\n')
+
 
 processed_messages = set() 
 processed_messages2 = set() 
