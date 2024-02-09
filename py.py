@@ -409,7 +409,7 @@ try:
         hours = floordiv(minutes, 60)
         minutes = seconds // 60
         if minutes >= 60:
-            minutes = 0
+            minutes - 60
   
   
         log_and_print('Прошло: {} часов и {} минут'.format(hours,minutes))
@@ -435,5 +435,5 @@ finally:
         os.system('nmcli connection down vpnbook-ca149-tcp80')
         log_and_print("VPN успешно отключен на Linux/Unix.")
     elif os.name == "nt":
-        subprocess.run('"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command disconnect vpnbook-fr200-tcp80.ovpn', check=True, shell=True)
+        subprocess.run(f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command disconnect {name_OPENVPN_Win}.ovpn', check=True, shell=True)
         log_and_print("VPN успешно отключен на Windows.")
