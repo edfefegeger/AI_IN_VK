@@ -415,7 +415,15 @@ try:
         if paused == True:
             log_and_print("Пауза")
             while Not_paused == False:
-                time.sleep(10)
+                time.sleep(10)                
+                with open("DATA.ini", 'r', encoding='utf-8') as r:
+                    another_token = r.readline().strip()
+                    openai.api_key = r.readline().strip()
+                    promt = r.readline().strip()
+                    version = r.readline().strip()
+                    time_end = int(r.readline().strip())
+                    name_OPENVPN_Linux = r.readline().strip()
+                    name_OPENVPN_Win = r.readline().strip()
 
             print("Снятие с паузы")
     
