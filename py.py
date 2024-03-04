@@ -7,6 +7,7 @@ import random
 from art import tprint
 import os
 import subprocess
+from print import log_and_print
 
 tprint("Ai_in_Vk")
 tprint("WELCOME")
@@ -23,11 +24,7 @@ with open("DATA.ini", 'r', encoding='utf-8') as r:
 command = f'nmcli connection up {name_OPENVPN_Linux}'
 command2 = f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command connect {name_OPENVPN_Win}.ovpn'
 
-def log_and_print(*messages):
-    formatted_message = ' '.join(map(str, messages))
-    print(formatted_message)
-    with open("LOGS.log", 'a', encoding='utf-8') as f:
-        f.write(formatted_message + '\n')
+
 
 if os.name == "posix":
     try:
@@ -43,11 +40,6 @@ if os.name == "nt":
     except subprocess.CalledProcessError:
         log_and_print("Ошибка при подключении к VPN")
     
-
-
-
-
-
 my_id = '545067517'
 domain = 'strongmennewschool'
 
@@ -68,18 +60,23 @@ ischatter2 = None
 user_texter2 = None
 id_caught = None
 id_caught2 = None
+Not_paused = False
 def toggle_pause():
     global paused
     paused = not paused
-    if paused:
-        log_and_print("Программа приостановлена. Нажмите S для продолжения.")
-    else:
-        log_and_print("Программа возобновлена.")
-
+    global Not_paused
+    Not_paused = False
+    log_and_print("Нажато '-'")
+def toggle_pause2():
+    global paused
+    paused = False
+    global Not_paused
+    Not_paused = True
+    log_and_print("Нажато '+'")
 paused = False
 
-keyboard.add_hotkey('q', toggle_pause)
-
+keyboard.add_hotkey('-', toggle_pause)
+keyboard.add_hotkey('+', toggle_pause2)
 
 get_long_poll = requests.get(
          'https://api.vk.com/method/messages.getLongPollServer',
@@ -94,7 +91,7 @@ ts = response_json_ts.get('response', {}).get('ts', [])
 log_and_print("ts:", ts)
 
 try:
-    while not paused:
+    while not paused or paused:
         long_poll = requests.get(
           'https://api.vk.com/method/messages.getLongPollHistory',
           params={
@@ -404,28 +401,24 @@ try:
         a = a + 1
         finish = time.time()
         seconds = int(finish - start)
-  
-        minutes = floordiv(seconds, 60)
-        hours = floordiv(minutes, 60)
-        minutes = seconds // 60
-        if minutes >= 60:
-            minutes - 60
-  
-  
-        log_and_print('Прошло: {} часов и {} минут'.format(hours,minutes))
+        
+        minutes = seconds // 60  # Получаем количество минут
+        hours = minutes // 60  # Получаем количество часов
+        minutes %= 60  # Оставляем только остаток минут
+        
+        log_and_print('Прошло: {} часов и {} минут'.format(hours, minutes))
+
   
         time_value = random.randint(12, time_end)
         log_and_print('Круг пройден: {}'.format(a))
   
         if paused == True:
-            keyboard.wait('s')
-            while paused == True:
-                time.sleep(5)
-                if keyboard.is_pressed('q'):
-                    toggle_pause()
-                
-  
-  
+            log_and_print("Пауза")
+            while Not_paused == False:
+                time.sleep(10)
+
+            print("Снятие с паузы")
+    
         time.sleep(time_value)  
 
 finally:
