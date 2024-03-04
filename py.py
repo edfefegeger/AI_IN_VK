@@ -414,6 +414,12 @@ try:
   
         if paused == True:
             log_and_print("Пауза")
+            if os.name == "posix":
+                os.system('nmcli connection down vpnbook-ca149-tcp80')
+                log_and_print("VPN успешно отключен на Linux/Unix.")
+            elif os.name == "nt":
+                subprocess.run(f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command disconnect {name_OPENVPN_Win}.ovpn', check=True, shell=True)
+                log_and_print("VPN успешно отключен на Windows.")
             while Not_paused == False:
                 time.sleep(10)                
                 with open("DATA.ini", 'r', encoding='utf-8') as r:
@@ -424,8 +430,23 @@ try:
                     time_end = int(r.readline().strip())
                     name_OPENVPN_Linux = r.readline().strip()
                     name_OPENVPN_Win = r.readline().strip()
+                
 
             print("Снятие с паузы")
+            
+            if os.name == "posix":
+                try:
+                    os.system(command)
+                    log_and_print("VPN успешно подключен на Linux/Unix.")
+                except:
+                    log_and_print("Ошибка при подключении к VPN")
+
+            if os.name == "nt":
+                try:
+                    subprocess.run(command2, check=True, shell=True)
+                    log_and_print("VPN успешно подключен на Windows.")
+                except subprocess.CalledProcessError:
+                    log_and_print("Ошибка при подключении к VPN")
     
         time.sleep(time_value)  
 
