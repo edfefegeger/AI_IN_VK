@@ -8,19 +8,25 @@ from art import tprint
 import os
 import subprocess
 import logging
+import configparser
 from print import log_and_print
 
 tprint("Ai_in_Vk")
 tprint("WELCOME")
 
-with open("DATA.ini", 'r', encoding='utf-8') as r:
-    another_token = r.readline().strip()
-    openai.api_key = r.readline().strip()
-    promt = r.readline().strip()
-    version = r.readline().strip()
-    time_end = int(r.readline().strip())
-    name_OPENVPN_Linux = r.readline().strip()
-    name_OPENVPN_Win = r.readline().strip()
+config = configparser.ConfigParser()
+
+# Читаем файл конфигурации
+config.read('DATA.ini', encoding='utf-8')
+
+# Получаем значения из конфигурационного файла
+another_token = config['DEFAULT']['another_token']
+openai_api_key = config['DEFAULT']['openai_api_key']
+promt = config['DEFAULT']['promt']
+version = config['DEFAULT']['version']
+time_end = int(config['DEFAULT']['time_end'])
+name_OPENVPN_Linux = config['DEFAULT']['name_OPENVPN_Linux']
+name_OPENVPN_Win = config['DEFAULT']['name_OPENVPN_Win']
 
 command = f'nmcli connection up {name_OPENVPN_Linux}'
 command2 = f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command connect {name_OPENVPN_Win}.ovpn'
@@ -439,14 +445,14 @@ try:
                     log_and_print("VPN успешно отключен на Windows.")
                 while Not_paused == False:
                     time.sleep(10)                
-                    with open("DATA.ini", 'r', encoding='utf-8') as r:
-                        another_token = r.readline().strip()
-                        openai.api_key = r.readline().strip()
-                        promt = r.readline().strip()
-                        version = r.readline().strip()
-                        time_end = int(r.readline().strip())
-                        name_OPENVPN_Linux = r.readline().strip()
-                        name_OPENVPN_Win = r.readline().strip()
+                    # Получаем значения из конфигурационного файла
+                    another_token = config['DEFAULT']['another_token']
+                    openai_api_key = config['DEFAULT']['openai_api_key']
+                    promt = config['DEFAULT']['promt']
+                    version = config['DEFAULT']['version']
+                    time_end = int(config['DEFAULT']['time_end'])
+                    name_OPENVPN_Linux = config['DEFAULT']['name_OPENVPN_Linux']
+                    name_OPENVPN_Win = config['DEFAULT']['name_OPENVPN_Win']
 
 
                 print("Снятие с паузы")
