@@ -7,7 +7,6 @@ import random
 from art import tprint
 import os
 import subprocess
-import logging
 import configparser
 from print import log_and_print
 
@@ -21,7 +20,7 @@ config.read('DATA.ini', encoding='utf-8')
 
 # Получаем значения из конфигурационного файла
 another_token = config['DEFAULT']['another_token']
-openai_api_key = config['DEFAULT']['openai_api_key']
+openai.api_key = config['DEFAULT']['openai_api_key']
 promt = config['DEFAULT']['promt']
 version = config['DEFAULT']['version']
 time_end = int(config['DEFAULT']['time_end'])
@@ -68,8 +67,6 @@ try:
     id_caught = None
     id_caught2 = None
     Not_paused = False
-
-
 
     def toggle_pause():
         global paused
@@ -227,11 +224,12 @@ try:
                                  try:
                                      conversation.append({"role": "user", "content": transcript_message})
                                      completion_audio = openai.ChatCompletion.create(
-                                     model="gpt-3.5-turbo-0125",
+                                     model="gpt-3.5-turbo-16k",
                                      messages=conversation + [{"role": "user", "content": transcript_message}],
-                                     frequency_penalty = 0.9,
+                                     frequency_penalty = 0.95,
                                      max_tokens=600,
-                                     presence_penalty = 0.6
+                                     presence_penalty = 0.6,
+                                     n = 3
 
                                      )
                                      ready_audio_message = completion_audio.choices[0].message.content
@@ -259,9 +257,10 @@ try:
                                 completion = openai.ChatCompletion.create(
                                     model="gpt-3.5-turbo-0125",
                                     messages=conversation + [{"role": "user", "content": text}],
-                                    frequency_penalty = 0.9,
+                                    frequency_penalty = 0.95,
                                     max_tokens=600,
-                                    presence_penalty = 0.6
+                                    presence_penalty = 0.6,
+                                    n = 3
                                     )
                                 ready_message = completion.choices[0].message.content
                                 log_and_print("Ответ GPT:", completion.choices[0].message.content)
@@ -355,9 +354,10 @@ try:
                                   completion_audio = openai.ChatCompletion.create(
                                   model="gpt-3.5-turbo-0125",
                                   messages=conversation2 + [{"role": "user", "content": transcript_message}],
-                                  frequency_penalty = 0.9,
-                                    max_tokens=600,
-                                    presence_penalty = 0.6
+                                  frequency_penalty = 0.95,
+                                  max_tokens=600,
+                                  presence_penalty = 0.6,
+                                  n = 3
                                   )
                                   ready_audio_message = completion_audio.choices[0].message.content
                                   log_and_print("Ответ GPT:", completion_audio.choices[0].message.content)
@@ -399,11 +399,12 @@ try:
                             try:
                               completion = openai.ChatCompletion.create(
                                   model="gpt-3.5-turbo-0125",
+                                  frequency_penalty = 0.95,
                                   messages=conversation2 + [{"role": "user", "content": text}],
-                                  frequency_penalty = 0.9,
                                   max_tokens=600,
-                                  presence_penalty = 0.6
-                                  )
+                                  presence_penalty = 0.6,
+                                  n = 3
+                                  ) 
                               ready_message = completion.choices[0].message.content
                               log_and_print("Ответ GPT:", completion.choices[0].message.content)
                               finally_message = requests.get(
@@ -447,7 +448,7 @@ try:
                     time.sleep(10)                
                     # Получаем значения из конфигурационного файла
                     another_token = config['DEFAULT']['another_token']
-                    openai_api_key = config['DEFAULT']['openai_api_key']
+                    openai.api_key = config['DEFAULT']['openai_api_key']
                     promt = config['DEFAULT']['promt']
                     version = config['DEFAULT']['version']
                     time_end = int(config['DEFAULT']['time_end'])
