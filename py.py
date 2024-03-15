@@ -7,6 +7,7 @@ import random
 from art import tprint
 import os
 import subprocess
+import logging
 from print import log_and_print
 
 tprint("Ai_in_Vk")

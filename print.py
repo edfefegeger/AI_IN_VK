@@ -1,6 +1,9 @@
+import logging
+
+# Конфигурация логгера
+logging.basicConfig(filename='LOGS.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', encoding='utf-8')
+
 def log_and_print(*messages):
     formatted_message = ' '.join(map(str, messages))
-    print(formatted_message)
-    with open("LOGS.log", 'a', encoding='utf-8') as f:
-        f.write(formatted_message + '\n')
-
+    logging.info(formatted_message)  # Запись в файл журнала
+    print(formatted_message)  # Вывод на консоль
