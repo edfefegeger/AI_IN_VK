@@ -213,15 +213,19 @@ try:
                                             )    
                                 break
                             
-                            if message_from == chatter and type_mes == 'audio_message' and text != "" :
+                            if message_from == chatter and type_mes == 'audio_message' :
                                  transcript_message = attachment.get('audio_message', {}).get('transcript', '')
                                  log_and_print("Сообщение от жертвы", message_from)
                                  log_and_print(transcript_message)
                                  try:
                                      conversation.append({"role": "user", "content": transcript_message})
                                      completion_audio = openai.ChatCompletion.create(
-                                     model="gpt-3.5-turbo-0613",
-                                     messages=conversation + [{"role": "user", "content": transcript_message}]
+                                     model="gpt-3.5-turbo-0125",
+                                     messages=conversation + [{"role": "user", "content": transcript_message}],
+                                     frequency_penalty = 0.9,
+                                     max_tokens=600,
+                                     presence_penalty = 0.6
+
                                      )
                                      ready_audio_message = completion_audio.choices[0].message.content
                                      log_and_print("Ответ GPT:", completion_audio.choices[0].message.content)
@@ -246,8 +250,11 @@ try:
                             try:
                                 conversation.append({"role": "user", "content": text })
                                 completion = openai.ChatCompletion.create(
-                                    model="gpt-3.5-turbo-0613",
-                                    messages=conversation + [{"role": "user", "content": text}]
+                                    model="gpt-3.5-turbo-0125",
+                                    messages=conversation + [{"role": "user", "content": text}],
+                                    frequency_penalty = 0.9,
+                                    max_tokens=600,
+                                    presence_penalty = 0.6
                                     )
                                 ready_message = completion.choices[0].message.content
                                 log_and_print("Ответ GPT:", completion.choices[0].message.content)
@@ -339,8 +346,11 @@ try:
                                 conversation2.append({"role": "user", "content": transcript_message})
                                 try:
                                   completion_audio = openai.ChatCompletion.create(
-                                  model="gpt-3.5-turbo-0613",
-                                  messages=conversation2 + [{"role": "user", "content": transcript_message}]
+                                  model="gpt-3.5-turbo-0125",
+                                  messages=conversation2 + [{"role": "user", "content": transcript_message}],
+                                  frequency_penalty = 0.9,
+                                    max_tokens=600,
+                                    presence_penalty = 0.6
                                   )
                                   ready_audio_message = completion_audio.choices[0].message.content
                                   log_and_print("Ответ GPT:", completion_audio.choices[0].message.content)
@@ -381,8 +391,11 @@ try:
                             conversation2.append({"role": "user", "content": text })
                             try:
                               completion = openai.ChatCompletion.create(
-                                  model="gpt-3.5-turbo-0613",
-                                  messages=conversation2 + [{"role": "user", "content": text}]
+                                  model="gpt-3.5-turbo-0125",
+                                  messages=conversation2 + [{"role": "user", "content": text}],
+                                  frequency_penalty = 0.9,
+                                  max_tokens=600,
+                                  presence_penalty = 0.6
                                   )
                               ready_message = completion.choices[0].message.content
                               log_and_print("Ответ GPT:", completion.choices[0].message.content)
