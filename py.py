@@ -8,13 +8,13 @@ from art import tprint
 import os
 import subprocess
 import configparser
-from print import log_and_print
+from logger import log_and_print
 
 tprint("Ai_in_Vk")
 tprint("WELCOME")
 
 config = configparser.ConfigParser()
-
+log_and_print('Запуск')
 # Читаем файл конфигурации
 config.read('DATA.ini', encoding='utf-8')
 
