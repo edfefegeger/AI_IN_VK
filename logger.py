@@ -14,7 +14,6 @@ def log_and_print(*messages):
     formatted_message = ' '.join(map(str, messages))
     if 'ошибка' in formatted_message or 'Ошибка' in formatted_message or 'Error' in formatted_message:
         logging.error(formatted_message)
-        print(formatted_message)
         bot.send_message(CHAT_ID, formatted_message)
         if CHAT_ID2!= CHAT_ID:
             bot.send_message(CHAT_ID2, formatted_message)
