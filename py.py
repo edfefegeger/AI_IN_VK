@@ -456,7 +456,7 @@ try:
                     name_OPENVPN_Win = config['DEFAULT']['name_OPENVPN_Win']
 
 
-                print("Снятие с паузы")
+                log_and_print("Снятие с паузы")
 
                 if os.name == "posix":
                     try:
