@@ -1,5 +1,5 @@
-LOGS.log
+/LOGS.log
 __pycache__/
 /build/
 /dist/
-DATA.ini
+/DATA.ini

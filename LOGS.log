@@ -161,3 +161,13 @@
 2024-04-09 17:11:50,592 - INFO - VPN успешно отключен на Windows.
 2024-04-09 17:11:50,592 - ERROR - Произошла не предвиденная ошибка: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.
 2024-04-09 17:11:50,680 - INFO - Произошла не предвиденная ошибка: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.
+2024-04-09 17:25:25,107 - INFO - Запуск
+2024-04-09 17:25:25,404 - INFO - Запуск
+2024-04-09 17:25:25,672 - INFO - VPN успешно подключен на Windows.
+2024-04-09 17:25:26,119 - INFO - ts: 1664366614
+2024-04-09 17:25:26,222 - INFO - Количество сообщений: 0
+2024-04-09 17:25:26,222 - INFO - Прошло: 0 часов и 0 минут
+2024-04-09 17:25:26,222 - INFO - Круг пройден: 1
+2024-04-09 17:25:32,368 - INFO - Завершение работы
+2024-04-09 17:25:32,368 - INFO - Всего сообщений: 1
+2024-04-09 17:25:32,611 - INFO - VPN успешно отключен на Windows.

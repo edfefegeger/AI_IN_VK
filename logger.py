@@ -1,7 +1,11 @@
 import logging
 import telebot
 from telebot import types
-TELEGRAM_BOT_TOKEN = '6710699381:AAF5Bnp7EWJmsp3anndKuyrmgRrIsCiCSwo'
+import configparser
+
+config = configparser.ConfigParser()
+config.read('DATA.ini', encoding='utf-8')
+TELEGRAM_BOT_TOKEN = config['TELEGRAM']['TELEGRAM_BOT_TOKEN']
 
 # Ваш chat_id, куда будут отправляться сообщения об ошибках
 CHAT_ID = '783897764'
