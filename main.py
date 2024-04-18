@@ -244,6 +244,10 @@ try:
                                 if url:
                                     image_bytes = requests.get(url).content
                                     base64_encoded_image = base64.b64encode(image_bytes).decode('utf-8')
+
+                                    text_photo = message_count['items'][0].get('text', '')
+                                    log_and_print("Подпись к фото:", text_photo)
+
                                     headers = {
                                       "Content-Type": "application/json",
                                       "Authorization": f"Bearer {openai.api_key}"
