@@ -244,7 +244,6 @@ try:
                                 if url:
                                     image_bytes = requests.get(url).content
                                     base64_encoded_image = base64.b64encode(image_bytes).decode('utf-8')
-
                                     headers = {
                                       "Content-Type": "application/json",
                                       "Authorization": f"Bearer {openai.api_key}"
@@ -254,11 +253,12 @@ try:
                                       "model": "gpt-4-turbo",
                                       "messages": [
                                         {
+                                         "role": "system", "content": promt,
                                           "role": "user",
                                           "content": [
                                             {
                                               "type": "text",
-                                              "text": "Что на этой картинке?"
+                                              "text": promt
                                             },
                                             {
                                               "type": "image_url",
@@ -274,7 +274,7 @@ try:
 
                                     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
                                     gpt_response = response.json()["choices"][0]["message"]["content"]
-                                    log_and_print(gpt_response)
+                                    log_and_print("Ответ GPT VISION:", gpt_response)
 
                                     finally_audio_message = requests.get(
                                      'https://api.vk.com/method/messages.send',
@@ -288,8 +288,6 @@ try:
                                      }
                                      )
                                     
-
-
 
                                 break
                             
