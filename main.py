@@ -1,3 +1,4 @@
+import base64
 from operator import floordiv
 import keyboard
 import requests
@@ -219,7 +220,18 @@ try:
                                         }
                                             )    
                             if message_from == chatter and type_mes == 'photo':
-                                log_and_print("Сообщение от жертвы и фото", message_from)
+                                url = False
+                                def url_to_base64(image_url):
+                                    response = requests.get(image_url)
+                                    if response.status_code == 200:
+                                        image_bytes = response.content
+                                        base64_encoded = base64.b64encode(image_bytes)
+                                        return base64_encoded.decode('utf-8')  # Возвращает base64 строку
+                                    else:
+                                        print("Ошибка при загрузке изображения:", response.status_code)
+                                        return None
+                                    
+                                log_and_print("Сообщение от жертвы и фото:", message_from)
                                 photo = attachment.get('photo', {})
                                 sizes = photo.get('sizes', [])
                                 # Выберите нужный вам размер фотографии (например, размер 'w')
@@ -228,6 +240,43 @@ try:
                                         url = size['url']
                                         print("URL фотографии:", url)
                                         break
+
+                                if url:
+                                    image_bytes = requests.get(url).content
+                                    base64_encoded_image = base64.b64encode(image_bytes).decode('utf-8')
+
+                                    headers = {
+                                      "Content-Type": "application/json",
+                                      "Authorization": f"Bearer {openai.api_key}"
+                                    }
+
+                                    payload = {
+                                      "model": "gpt-4-turbo",
+                                      "messages": [
+                                        {
+                                          "role": "user",
+                                          "content": [
+                                            {
+                                              "type": "text",
+                                              "text": "Что на этой картинке?"
+                                            },
+                                            {
+                                              "type": "image_url",
+                                              "image_url": {
+                                                "url": url
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "max_tokens": 300
+                                    }
+
+                                    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+                                    gpt_response = response.json()["choices"][0]["message"]["content"]
+                                    log_and_print(gpt_response)
+
+
 
                                 break
                             
