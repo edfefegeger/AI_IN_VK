@@ -18,6 +18,7 @@ log_and_print('Запуск')
 # Читаем файл конфигурации
 config.read('DATA.ini', encoding='utf-8')
 
+
 # Получаем значения из конфигурационного файла
 another_token = config['DEFAULT']['another_token']
 openai.api_key = config['DEFAULT']['openai_api_key']
@@ -80,6 +81,7 @@ try:
         global Not_paused
         Not_paused = True
         log_and_print("Нажато '+'")
+
     paused = False
 
     keyboard.add_hotkey('-', toggle_pause)
@@ -172,6 +174,7 @@ try:
                         for attachment in attachments:
                             type_mes = attachment.get('type', '')
                             log_and_print("Тип Вложения:", type_mes)
+
                             if message_from == chatter and type_mes == 'wall':
                                 log_and_print("Сообщение от жертвы", message_from)
                                 finally_message_404 = requests.get(
@@ -215,6 +218,17 @@ try:
                                         'reply_to': message_id
                                         }
                                             )    
+                            if message_from == chatter and type_mes == 'photo':
+                                log_and_print("Сообщение от жертвы и фото", message_from)
+                                photo = attachment.get('photo', {})
+                                sizes = photo.get('sizes', [])
+                                # Выберите нужный вам размер фотографии (например, размер 'w')
+                                for size in sizes:
+                                    if size['type'] == 'w':
+                                        url = size['url']
+                                        print("URL фотографии:", url)
+                                        break
+
                                 break
                             
                             if message_from == chatter and type_mes == 'audio_message' :
