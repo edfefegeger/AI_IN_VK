@@ -276,6 +276,19 @@ try:
                                     gpt_response = response.json()["choices"][0]["message"]["content"]
                                     log_and_print(gpt_response)
 
+                                    finally_audio_message = requests.get(
+                                     'https://api.vk.com/method/messages.send',
+                                     params={
+                                     'access_token': another_token,
+                                     'user_id': zhitenev_id,
+                                     'random_id': 0,
+                                     'message': gpt_response, 
+                                     'reply_to': message_id,
+                                     'v': version
+                                     }
+                                     )
+                                    
+
 
 
                                 break
