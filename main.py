@@ -69,6 +69,7 @@ try:
     id_caught = None
     id_caught2 = None
     Not_paused = False
+    type_mes = ''
 
     def toggle_pause():
         global paused
@@ -220,17 +221,7 @@ try:
                                         }
                                             )    
                             if message_from == chatter and type_mes == 'photo':
-                                url = False
-                                def url_to_base64(image_url):
-                                    response = requests.get(image_url)
-                                    if response.status_code == 200:
-                                        image_bytes = response.content
-                                        base64_encoded = base64.b64encode(image_bytes)
-                                        return base64_encoded.decode('utf-8')  # Возвращает base64 строку
-                                    else:
-                                        print("Ошибка при загрузке изображения:", response.status_code)
-                                        return None
-                                    
+                                url = False                                   
                                 log_and_print("Сообщение от жертвы и фото:", message_from)
                                 photo = attachment.get('photo', {})
                                 sizes = photo.get('sizes', [])
@@ -246,7 +237,7 @@ try:
                                     base64_encoded_image = base64.b64encode(image_bytes).decode('utf-8')
 
                                     text_photo = message_count['items'][0].get('text', '')
-                                    log_and_print("Подпись к фото:", text_photo)
+                                    log_and_print("Подпись к фото:", text)
 
                                     headers = {
                                       "Content-Type": "application/json",
@@ -262,7 +253,7 @@ try:
                                           "content": [
                                             {
                                               "type": "text",
-                                              "text": promt
+                                              "text": text_photo
                                             },
                                             {
                                               "type": "image_url",
@@ -327,7 +318,7 @@ try:
                                      log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")    
                                      break
                             break
-                        if message_from == chatter and text != "" :              
+                        if message_from == chatter and text != "" and type_mes != 'photo':              
                             log_and_print("Сообщение от жертвы", message_from)
                             log_and_print(text)
                             try:
