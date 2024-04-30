@@ -221,6 +221,7 @@ try:
                                         }
                                             )    
                             if message_from == chatter and type_mes == 'photo':
+                                conversation.append({"role": "user", "content": text })
                                 url = False                                   
                                 log_and_print("Сообщение от жертвы и фото:", message_from)
                                 photo = attachment.get('photo', {})
@@ -248,12 +249,16 @@ try:
                                       "model": "gpt-4-turbo",
                                       "messages": [
                                         {
-                                         "role": "system", "content": promt,
+                                         "role": "system",  "content":
+                                            {
+                                              "type": "text",
+                                              "text": promt
+                                            },
                                           "role": "user",
                                           "content": [
                                             {
                                               "type": "text",
-                                              "text": text_photo
+                                              "text": text
                                             },
                                             {
                                               "type": "image_url",
@@ -412,6 +417,76 @@ try:
                                         }
                                             )
                                 break
+                            if message_from == chatter and type_mes == 'photo':
+                                conversation2.append({"role": "user", "content": text })
+                                url = False                                   
+                                log_and_print("Сообщение от жертвы и фото:", message_from)
+                                photo = attachment.get('photo', {})
+                                sizes = photo.get('sizes', [])
+                                # Выберите нужный вам размер фотографии (например, размер 'w')
+                                for size in sizes:
+                                    if size['type'] == 'w':
+                                        url = size['url']
+                                        print("URL фотографии:", url)
+                                        break
+
+                                if url:
+                                    image_bytes = requests.get(url).content
+                                    base64_encoded_image = base64.b64encode(image_bytes).decode('utf-8')
+
+                                    text_photo = message_count['items'][0].get('text', '')
+                                    log_and_print("Подпись к фото:", text)
+
+                                    headers = {
+                                      "Content-Type": "application/json",
+                                      "Authorization": f"Bearer {openai.api_key}"
+                                    }
+
+                                    payload = {
+                                      "model": "gpt-4-turbo",
+                                      "messages": [
+                                        {
+                                         "role": "system",  "content":
+                                            {
+                                              "type": "text",
+                                              "text": promt
+                                            },
+                                          "role": "user",
+                                          "content": [
+                                            {
+                                              "type": "text",
+                                              "text": text
+                                            },
+                                            {
+                                              "type": "image_url",
+                                              "image_url": {
+                                                "url": url
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "max_tokens": 300
+                                    }
+
+                                    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+                                    gpt_response = response.json()["choices"][0]["message"]["content"]
+                                    log_and_print("Ответ GPT VISION:", gpt_response)
+
+                                    finally_audio_message = requests.get(
+                                     'https://api.vk.com/method/messages.send',
+                                     params={
+                                     'access_token': another_token,
+                                     'user_id': zhitenev_id2,
+                                     'random_id': 0,
+                                     'message': gpt_response, 
+                                     'reply_to': message_id,
+                                     'v': version
+                                     }
+                                     )
+                                    
+
+                                break
                             
                             if message_from == chatter and type_mes == 'audio_message':
                                 transcript_message = attachment.get('audio_message', {}).get('transcript', '')
@@ -461,7 +536,8 @@ try:
                                       }
                                           )      
                             break
-                        if message_from == chatter2 and text != "" :
+                        
+                        if message_from == chatter2 and text != "" and type_mes != 'photo' :
                             log_and_print("Сообщение от второй жертвы", message_from)
                             log_and_print(text)
                             conversation2.append({"role": "user", "content": text })
