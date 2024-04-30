@@ -323,7 +323,7 @@ try:
                                      log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")    
                                      break
                             break
-                        if message_from == chatter and text != "" and type_mes != 'photo':              
+                        if message_from == chatter and text != "":              
                             log_and_print("Сообщение от жертвы", message_from)
                             log_and_print(text)
                             try:
@@ -537,7 +537,7 @@ try:
                                           )      
                             break
                         
-                        if message_from == chatter2 and text != "" and type_mes != 'photo' :
+                        if message_from == chatter2 and text != ""  :
                             log_and_print("Сообщение от второй жертвы", message_from)
                             log_and_print(text)
                             conversation2.append({"role": "user", "content": text })
