@@ -253,31 +253,36 @@ try:
                                     }
 
                                     payload = {
-                                      "model": "gpt-4-turbo",
-                                      "messages": [
-                                        {
-                                         "role": "system",  "content":
+                                        "model": "gpt-4-turbo",
+                                        "messages": [
                                             {
-                                              "type": "text",
-                                              "text": promt
-                                            },
-                                          "role": "user",
-                                          "content": [
-                                            {
-                                              "type": "text",
-                                              "text": text
+                                                "role": "system",
+                                                "content": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": promt
+                                                    }
+                                                ]
                                             },
                                             {
-                                              "type": "image_url",
-                                              "image_url": {
-                                                "url": url
-                                              }
+                                                "role": "user",
+                                                "content": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": text
+                                                    },
+                                                    {
+                                                        "type": "image_url",
+                                                        "image_url": {
+                                                            "url": url
+                                                        }
+                                                    }
+                                                ]
                                             }
-                                          ]
-                                        }
-                                      ],
-                                      "max_tokens": 300
+                                        ],
+                                        "max_tokens": 300
                                     }
+
 
                                     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
                                     gpt_response = response.json()["choices"][0]["message"]["content"]
@@ -548,7 +553,7 @@ try:
                                           )      
                             break
                         
-                        if message_from == chatter2 and text != "" and already_processed_photo_text_2 == False  :
+                        if message_from == chatter2 and text != "" and already_processed_photo_text_2 == False:
                             log_and_print("Сообщение от второй жертвы", message_from)
                             log_and_print(text)
                             conversation2.append({"role": "user", "content": text })
