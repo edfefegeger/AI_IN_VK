@@ -254,7 +254,7 @@ try:
 
                                     payload = {
                                         "model": "gpt-4-turbo",
-                                        "messages": [
+                                         "messages": conversation + [
                                             {
                                                 "role": "system",
                                                 "content": [
@@ -460,7 +460,7 @@ try:
 
                                     payload = {
                                         "model": "gpt-4-turbo",
-                                        "messages": [
+                                          "messages": conversation2 + [
                                             {
                                                 "role": "system",
                                                 "content": [
