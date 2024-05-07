@@ -70,6 +70,8 @@ try:
     id_caught2 = None
     Not_paused = False
     type_mes = ''
+    already_processed_photo_text_ = False
+    already_processed_photo_text_2 = False
 
     def toggle_pause():
         global paused
@@ -238,7 +240,12 @@ try:
                                     base64_encoded_image = base64.b64encode(image_bytes).decode('utf-8')
 
                                     text_photo = message_count['items'][0].get('text', '')
+
+                                    if text:
+                                        already_processed_photo_text_ = True
+
                                     log_and_print("Подпись к фото:", text)
+
 
                                     headers = {
                                       "Content-Type": "application/json",
@@ -323,7 +330,7 @@ try:
                                      log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")    
                                      break
                             break
-                        if message_from == chatter and text != "":              
+                        if message_from == chatter and text != "" and already_processed_photo_text_ == False:              
                             log_and_print("Сообщение от жертвы", message_from)
                             log_and_print(text)
                             try:
@@ -353,6 +360,7 @@ try:
                                 log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")
                                 break
                             break
+                        already_processed_photo_text_ = False
             if ischatter2 == True and user_typer2 == 'user':
                 if num2 == True:  
                    log_and_print("Второй найден",user_texter, user_typer)    
@@ -433,6 +441,9 @@ try:
                                 if url:
                                     image_bytes = requests.get(url).content
                                     base64_encoded_image = base64.b64encode(image_bytes).decode('utf-8')
+
+                                    if text:
+                                        already_processed_photo_text_2 = True
 
                                     text_photo = message_count['items'][0].get('text', '')
                                     log_and_print("Подпись к фото:", text)
@@ -537,7 +548,7 @@ try:
                                           )      
                             break
                         
-                        if message_from == chatter2 and text != ""  :
+                        if message_from == chatter2 and text != "" and already_processed_photo_text_2 == False  :
                             log_and_print("Сообщение от второй жертвы", message_from)
                             log_and_print(text)
                             conversation2.append({"role": "user", "content": text })
@@ -567,6 +578,8 @@ try:
                               log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")  
                               break  
                             break
+
+                        already_processed_photo_text_2 = False
             a = a + 1
             finish = time.time()
             seconds = int(finish - start)
