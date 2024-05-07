@@ -459,30 +459,34 @@ try:
                                     }
 
                                     payload = {
-                                      "model": "gpt-4-turbo",
-                                      "messages": [
-                                        {
-                                         "role": "system",  "content":
+                                        "model": "gpt-4-turbo",
+                                        "messages": [
                                             {
-                                              "type": "text",
-                                              "text": promt
-                                            },
-                                          "role": "user",
-                                          "content": [
-                                            {
-                                              "type": "text",
-                                              "text": text
+                                                "role": "system",
+                                                "content": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": promt
+                                                    }
+                                                ]
                                             },
                                             {
-                                              "type": "image_url",
-                                              "image_url": {
-                                                "url": url
-                                              }
+                                                "role": "user",
+                                                "content": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": text
+                                                    },
+                                                    {
+                                                        "type": "image_url",
+                                                        "image_url": {
+                                                            "url": url
+                                                        }
+                                                    }
+                                                ]
                                             }
-                                          ]
-                                        }
-                                      ],
-                                      "max_tokens": 300
+                                        ],
+                                        "max_tokens": 300
                                     }
 
                                     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
