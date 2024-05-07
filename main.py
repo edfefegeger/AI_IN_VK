@@ -10,28 +10,18 @@ import os
 import subprocess
 import configparser
 from logger import log_and_print
-
-tprint("Ai_in_Vk")
+from Variables import another_token, promt, version, time_end, name_OPENVPN_Linux, name_OPENVPN_Win, num, num2, processed_messages, processed_messages2, a, b, count, count2, conversation, conversation2, start, minutes, ischatter, ischatter2, user_texter2, id_caught, id_caught2, Not_paused, type_mes, already_processed_photo_text_, already_processed_photo_text_2, my_id, domain, paused
 tprint("WELCOME")
 
 config = configparser.ConfigParser()
 log_and_print('Запуск')
 # Читаем файл конфигурации
 config.read('DATA.ini', encoding='utf-8')
-
-
 # Получаем значения из конфигурационного файла
-another_token = config['DEFAULT']['another_token']
 openai.api_key = config['DEFAULT']['openai_api_key']
-promt = config['DEFAULT']['promt']
-version = config['DEFAULT']['version']
-time_end = int(config['DEFAULT']['time_end'])
-name_OPENVPN_Linux = config['DEFAULT']['name_OPENVPN_Linux']
-name_OPENVPN_Win = config['DEFAULT']['name_OPENVPN_Win']
 
 command = f'nmcli connection up {name_OPENVPN_Linux}'
 command2 = f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command connect {name_OPENVPN_Win}.ovpn'
-
 try:
 
     if os.name == "posix":
@@ -48,31 +38,6 @@ try:
         except subprocess.CalledProcessError:
             log_and_print("Ошибка при подключении к VPN")
 
-    my_id = '545067517'
-    domain = 'strongmennewschool'
-
-    num = True
-    num2 = True
-    processed_messages = set() 
-    processed_messages2 = set() 
-    a = 0
-    b = 1
-    count = 0
-    count2 = 0
-    conversation = [{"role": "system", "content":  promt}] 
-    conversation2 = [{"role": "system", "content":  promt}] 
-    start = time.time()
-    minutes = 0
-    ischatter = None
-    ischatter2 = None
-    user_texter2 = None
-    id_caught = None
-    id_caught2 = None
-    Not_paused = False
-    type_mes = ''
-    already_processed_photo_text_ = False
-    already_processed_photo_text_2 = False
-
     def toggle_pause():
         global paused
         paused = not paused
@@ -85,8 +50,6 @@ try:
         global Not_paused
         Not_paused = True
         log_and_print("Нажато '+'")
-
-    paused = False
 
     keyboard.add_hotkey('-', toggle_pause)
     keyboard.add_hotkey('+', toggle_pause2)
@@ -254,7 +217,7 @@ try:
 
                                     payload = {
                                         "model": "gpt-4-turbo",
-                                         "messages": conversation + [
+                                         "messages": conversation2 + [
                                             {
                                                 "role": "system",
                                                 "content": [
