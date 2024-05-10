@@ -11,12 +11,11 @@ import subprocess
 import configparser
 from logger import log_and_print
 from Long_poll import Get_Long_Poll
-from Variables import another_token, promt, version, time_end, name_OPENVPN_Linux, name_OPENVPN_Win, num, num2, processed_messages, processed_messages2, a, b, count, count2, conversation, conversation2, start, minutes, ischatter, ischatter2, user_texter2, id_caught, id_caught2, Not_paused, type_mes, already_processed_photo_text_, already_processed_photo_text_2, my_id, domain, paused
+from Variables import another_token, promt, version, time_end, name_OPENVPN_Linux, name_OPENVPN_Win, num, num2, processed_messages, processed_messages2, a, b, count, count2, conversation, conversation2, start, minutes, ischatter, ischatter2, user_texter2, id_caught, id_caught2, Not_paused, type_mes, already_processed_photo_text_, already_processed_photo_text_2, my_id, domain, paused, command, command2
 
 tprint("WELCOME")
 tprint("VK ASSISTANT")
 ts = None
-
 config = configparser.ConfigParser()
 log_and_print('Запуск')
 # Читаем файл конфигурации
@@ -24,8 +23,6 @@ config.read('DATA.ini', encoding='utf-8')
 # Получаем значения из конфигурационного файла
 openai.api_key = config['DEFAULT']['openai_api_key']
 
-command = f'nmcli connection up {name_OPENVPN_Linux}'
-command2 = f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command connect {name_OPENVPN_Win}.ovpn'
 try:
 
     if os.name == "posix":
@@ -183,7 +180,7 @@ try:
                                 log_and_print("Сообщение от жертвы и фото:", message_from)
                                 photo = attachment.get('photo', {})
                                 sizes = photo.get('sizes', [])
-                                # Выберите нужный вам размер фотографии (например, размер 'w')
+
                                 for size in sizes:
                                     if size['type'] == 'w':
                                         url = size['url']
