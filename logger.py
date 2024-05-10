@@ -7,7 +7,6 @@ config = configparser.ConfigParser()
 config.read('DATA.ini', encoding='utf-8')
 TELEGRAM_BOT_TOKEN = config['TELEGRAM']['TELEGRAM_BOT_TOKEN']
 
-# Ваш chat_id, куда будут отправляться сообщения об ошибках
 CHAT_ID = '783897764'
 CHAT_ID2 = '783897764'
 bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)

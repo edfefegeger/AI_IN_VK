@@ -12,6 +12,28 @@ import configparser
 from logger import log_and_print
 from Variables import another_token, promt, version, time_end, name_OPENVPN_Linux, name_OPENVPN_Win, num, num2, processed_messages, processed_messages2, a, b, count, count2, conversation, conversation2, start, minutes, ischatter, ischatter2, user_texter2, id_caught, id_caught2, Not_paused, type_mes, already_processed_photo_text_, already_processed_photo_text_2, my_id, domain, paused
 tprint("WELCOME")
+ts = None
+def Get_Long_Poll(ts):
+
+    if ts == None:
+        Result = requests.get(
+                 'https://api.vk.com/method/messages.getLongPollServer',
+                 params={
+                     'access_token': another_token,
+                     'v': version
+            }
+        )
+
+    else:
+        Result = requests.get(
+              'https://api.vk.com/method/messages.getLongPollHistory',
+              params={
+                  'access_token': another_token,
+                  'ts': ts,
+                  'v': version
+              }
+          )
+    return Result
 
 config = configparser.ConfigParser()
 log_and_print('Запуск')
@@ -54,13 +76,7 @@ try:
     keyboard.add_hotkey('-', toggle_pause)
     keyboard.add_hotkey('+', toggle_pause2)
 
-    get_long_poll = requests.get(
-             'https://api.vk.com/method/messages.getLongPollServer',
-             params={
-                 'access_token': another_token,
-                 'v': version
-             }
-        )
+    get_long_poll = Get_Long_Poll(None)
 
     response_json_ts = get_long_poll.json()
     ts = response_json_ts.get('response', {}).get('ts', [])
@@ -68,15 +84,11 @@ try:
 
     try:
         while not paused or paused:
-            long_poll = requests.get(
-              'https://api.vk.com/method/messages.getLongPollHistory',
-              params={
-                  'access_token': another_token,
-                  'ts': ts,
-                  'v': version
-              }
-          )
+            long_poll = Get_Long_Poll(ts)
+            
+
             long_poll_history = long_poll.json()
+            print("Long poll history:", long_poll_history)
             message_count = long_poll_history.get('response', {}).get('messages', '')
             message_conv = long_poll_history.get('response', {}).get('conversations', [])
             message_count2 = message_count.get('count', '')
