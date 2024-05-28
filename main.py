@@ -1,5 +1,4 @@
 import base64
-from operator import floordiv
 import keyboard
 import requests
 import time
@@ -7,7 +6,7 @@ import openai
 import random
 from art import tprint
 import os
-import subprocess
+import subprocess 
 import configparser
 from logger import log_and_print
 from Long_poll import Get_Long_Poll
@@ -388,7 +387,7 @@ try:
                                 log_and_print("Сообщение от жертвы и фото:", message_from)
                                 photo = attachment.get('photo', {})
                                 sizes = photo.get('sizes', [])
-                                # Выберите нужный вам размер фотографии (например, размер 'w')
+                                
                                 for size in sizes:
                                     if size['type'] == 'w':
                                         url = size['url']

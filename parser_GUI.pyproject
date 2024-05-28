@@ -1,0 +1,16 @@
+{
+    "files": [
+        "widget.py",
+        "form.ui",
+        "requirments.txt",
+        "LOGS.log",
+        "main.py",
+        "DATA.ini",
+        "pause.py",
+        "Long_poll.py",
+        "Variables.py",
+        "logger.py",
+        ".gitignore",
+        "ui_form.py"
+    ]
+}

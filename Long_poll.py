@@ -1,5 +1,5 @@
 import requests
-from Variables import another_token, promt, version, time_end, name_OPENVPN_Linux, name_OPENVPN_Win, num, num2, processed_messages, processed_messages2, a, b, count, count2, conversation, conversation2, start, minutes, ischatter, ischatter2, user_texter2, id_caught, id_caught2, Not_paused, type_mes, already_processed_photo_text_, already_processed_photo_text_2, my_id, domain, paused
+from Variables import another_token, version
 
 def Get_Long_Poll(ts):
     if ts == None:
