@@ -11,6 +11,9 @@
         "Variables.py",
         "logger.py",
         ".gitignore",
-        "ui_form.py"
+        "ui_form.py",
+        "about.ui",
+        "about.py",
+        "ui_about.py"
     ]
 }
