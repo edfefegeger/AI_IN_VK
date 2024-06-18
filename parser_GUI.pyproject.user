@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 12.0.0, 2024-05-28T15:40:28. -->
+<!-- Written by QtCreator 12.0.0, 2024-06-13T17:40:00. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -101,6 +101,7 @@
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Python.PysideBuildStep</value>
+      <value type="QString" key="Python.PySideProjectTool">C:\Users\Super PC\AppData\Local\Programs\Python\Python310\Scripts\pyside6-project.exe</value>
      </valuemap>
      <value type="qlonglong" key="ProjectExplorer.BuildStepList.StepsCount">1</value>
      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Build</value>
@@ -148,6 +149,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.C:/Users/Super PC/Downloads/parser_GUI/widget.py</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/Super PC/Downloads/parser_GUI/widget.py</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Interpreter">{c2f842d2-972e-4a2d-bce4-b1228121e647}</value>
     <value type="QString" key="PythonEditor.RunConfiguation.Script">C:\Users\Super PC\Downloads\parser_GUI\widget.py</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>

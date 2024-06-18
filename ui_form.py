@@ -22,7 +22,9 @@ class Ui_Widget(object):
     def setupUi(self, Widget):
         if not Widget.objectName():
             Widget.setObjectName(u"Widget")
-        Widget.resize(350, 398)
+        Widget.resize(250, 300)
+        Widget.setMinimumSize(QSize(0, 0))
+        Widget.setMaximumSize(QSize(250, 300))
         self.verticalLayout = QVBoxLayout(Widget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout_2 = QVBoxLayout()
@@ -38,13 +40,21 @@ class Ui_Widget(object):
 
         self.verticalLayout_2.addWidget(self.label)
 
+        self.pushButton = QPushButton(Widget)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setMinimumSize(QSize(165, 50))
+        self.pushButton.setMaximumSize(QSize(165, 50))
+        font1 = QFont()
+        font1.setPointSize(12)
+        font1.setBold(True)
+        self.pushButton.setFont(font1)
+
+        self.verticalLayout_2.addWidget(self.pushButton, 0, Qt.AlignHCenter)
+
         self.pushButton_2 = QPushButton(Widget)
         self.pushButton_2.setObjectName(u"pushButton_2")
         self.pushButton_2.setMinimumSize(QSize(165, 50))
         self.pushButton_2.setMaximumSize(QSize(250, 0))
-        font1 = QFont()
-        font1.setPointSize(12)
-        font1.setBold(True)
         self.pushButton_2.setFont(font1)
 
         self.verticalLayout_2.addWidget(self.pushButton_2, 0, Qt.AlignHCenter)
@@ -61,6 +71,7 @@ class Ui_Widget(object):
     def retranslateUi(self, Widget):
         Widget.setWindowTitle(QCoreApplication.translate("Widget", u"Widget", None))
         self.label.setText(QCoreApplication.translate("Widget", u"<html><head/><body><p align=\"center\">AI IN VK</p></body></html>", None))
+        self.pushButton.setText(QCoreApplication.translate("Widget", u"\u041e \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0435", None))
         self.pushButton_2.setText(QCoreApplication.translate("Widget", u"\u041d\u0430\u0447\u0430\u0442\u044c \u0440\u0430\u0431\u043e\u0442\u0443", None))
     # retranslateUi
 
