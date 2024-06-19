@@ -22,7 +22,7 @@ class Ui_Widget(object):
     def setupUi(self, Widget):
         if not Widget.objectName():
             Widget.setObjectName(u"Widget")
-        Widget.resize(250, 300)
+        Widget.resize(252, 330)
         Widget.setMinimumSize(QSize(0, 0))
         Widget.setMaximumSize(QSize(252, 330))
         self.verticalLayout = QVBoxLayout(Widget)
@@ -46,7 +46,7 @@ class Ui_Widget(object):
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(-1, -1, -1, 0)
+        self.verticalLayout_3.setContentsMargins(-1, 23, -1, 0)
         self.pushButton = QPushButton(Widget)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setMinimumSize(QSize(230, 50))
