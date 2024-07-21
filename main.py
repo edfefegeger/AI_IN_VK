@@ -10,7 +10,7 @@ import subprocess
 import configparser
 from logger import log_and_print
 from Long_poll import Get_Long_Poll
-from Variables import another_token, promt, version, time_end, name_OPENVPN_Linux, name_OPENVPN_Win, num, num2, processed_messages, processed_messages2, a, b, count, count2, conversation, conversation2, start, minutes, ischatter, ischatter2, user_texter2, id_caught, id_caught2, type_mes, already_processed_photo_text_, already_processed_photo_text_2, my_id, domain, command, command2
+from Variables import another_token, promt, version, time_end, name_OPENVPN_Linux, name_OPENVPN_Win, num, num2, processed_messages, processed_messages2, a, b, count, count2, conversation, conversation2, start, minutes, ischatter, ischatter2, user_texter2, id_caught, id_caught2, type_mes, already_processed_photo_text_, already_processed_photo_text_2, my_id, command, command2
 from ui_form import Ui_Widget
 from PySide6.QtWidgets import QApplication, QWidget, QDialog
 from pause import paused, Not_paused

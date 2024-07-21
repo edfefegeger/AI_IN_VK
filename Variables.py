@@ -35,7 +35,6 @@ type_mes = ''
 already_processed_photo_text_ = False
 already_processed_photo_text_2 = False
 my_id = '545067517'
-domain = 'strongmennewschool'
 paused = False
 command = f'nmcli connection up {name_OPENVPN_Linux}'
 command2 = f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command connect {name_OPENVPN_Win}.ovpn'
