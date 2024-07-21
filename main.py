@@ -6,11 +6,14 @@ import openai
 import random
 from art import tprint
 import os
-import subprocess 
+import subprocess
 import configparser
 from logger import log_and_print
 from Long_poll import Get_Long_Poll
-from Variables import another_token, promt, version, time_end, name_OPENVPN_Linux, name_OPENVPN_Win, num, num2, processed_messages, processed_messages2, a, b, count, count2, conversation, conversation2, start, minutes, ischatter, ischatter2, user_texter2, id_caught, id_caught2, Not_paused, type_mes, already_processed_photo_text_, already_processed_photo_text_2, my_id, domain, paused, command, command2
+from Variables import another_token, promt, version, time_end, name_OPENVPN_Linux, name_OPENVPN_Win, num, num2, processed_messages, processed_messages2, a, b, count, count2, conversation, conversation2, start, minutes, ischatter, ischatter2, user_texter2, id_caught, id_caught2, type_mes, already_processed_photo_text_, already_processed_photo_text_2, my_id, domain, command, command2
+from ui_form import Ui_Widget
+from PySide6.QtWidgets import QApplication, QWidget, QDialog
+from pause import paused, Not_paused
 
 tprint("WELCOME")
 tprint("VK ASSISTANT")
@@ -21,6 +24,30 @@ log_and_print('Запуск')
 config.read('DATA.ini', encoding='utf-8')
 # Получаем значения из конфигурационного файла
 openai.api_key = config['DEFAULT']['openai_api_key']
+
+class Widget(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.ui = Ui_Widget()
+        self.ui.setupUi(self)
+
+
+        self.ui.pushButton_3.clicked.connect(self.on_pause_button_clicked)  # Пауза
+        self.ui.pushButton_4.clicked.connect(self.on_resume_button_clicked)  # Продолжить
+
+    def on_pause_button_clicked(self):
+        global paused
+        paused = not paused
+        log_and_print(f"Paused set to: {paused}")
+        log_and_print("Функция toggle_pause вызвана через GUI")
+
+    def on_resume_button_clicked(self):
+        global paused
+        paused = False
+        global Not_paused
+        Not_paused = True
+        log_and_print(f"Resumed, Not_paused set to: {Not_paused}")
+        log_and_print("Функция toggle_pause2 вызвана через GUI")
 
 try:
 
@@ -51,8 +78,26 @@ try:
         Not_paused = True
         log_and_print("Нажато '+'")
 
-    keyboard.add_hotkey('-', toggle_pause)
-    keyboard.add_hotkey('+', toggle_pause2)
+    # keyboard.add_hotkey('-', toggle_pause)
+    # keyboard.add_hotkey('+', toggle_pause2)
+
+    class Widget(QWidget):
+        def __init__(self, parent=None):
+            super().__init__(parent)
+            self.ui = Ui_Widget()
+            self.ui.setupUi(self)
+
+            # Подключаем кнопки к их функциям
+            self.ui.pushButton_3.clicked.connect(self.on_pause_button_clicked)  # Пауза
+            self.ui.pushButton_4.clicked.connect(self.on_resume_button_clicked)  # Продолжить
+
+        def on_pause_button_clicked(self):
+            toggle_pause()
+            log_and_print("Функция toggle_pause вызвана через GUI")
+
+        def on_resume_button_clicked(self):
+            toggle_pause2()
+            log_and_print("Функция toggle_pause2 вызвана через GUI")
 
     get_long_poll = Get_Long_Poll(None)
 
@@ -61,43 +106,44 @@ try:
     log_and_print("ts:", ts)
 
     try:
+
         while not paused or paused:
             long_poll = Get_Long_Poll(ts)
-            
+
             long_poll_history = long_poll.json()
             message_count = long_poll_history.get('response', {}).get('messages', '')
             message_conv = long_poll_history.get('response', {}).get('conversations', [])
             message_count2 = message_count.get('count', '')
             log_and_print("Количество сообщений:", message_count2)
-    
+
             if message_count2 != 0 :
                 if id_caught != message_conv[0].get('peer', {}).get('id', ''):
                   user_texter = message_conv[0].get('peer', {}).get('id', '')
-                  user_typer = message_conv[0].get('peer', {}).get('type', '')     
+                  user_typer = message_conv[0].get('peer', {}).get('type', '')
 
                   id_caught = user_texter
                   zhitenev_id = id_caught
                   chatter = id_caught
                   ischatter = True
-    
+
                   if len(message_conv) >= 1.5:
                       user_texter2 = True
-    
+
             if len(message_conv) > 1:
                 if id_caught2 != message_conv[1].get('peer', {}).get('id', ''):
                   user_texter2 = message_conv[1].get('peer', {}).get('id', '')
-                  user_typer2 = message_conv[1].get('peer', {}).get('type', '')           
+                  user_typer2 = message_conv[1].get('peer', {}).get('type', '')
 
                   id_caught2 = user_texter2
                   zhitenev_id2 = id_caught2
                   chatter2 = id_caught2
                   ischatter2 = True
 
-            if ischatter == True and user_typer == 'user': 
-                if num == True:  
-                    log_and_print("Первый найден",user_texter, user_typer)    
+            if ischatter == True and user_typer == 'user':
+                if num == True:
+                    log_and_print("Первый найден",user_texter, user_typer)
                     num = False
-    
+
                 messages = requests.get(
                     'https://api.vk.com/method/messages.getHistory',
                     params={
@@ -118,14 +164,14 @@ try:
                         if message_id in processed_messages:
                             log_and_print("Сообщение уже обработано")
                             break
-                        processed_messages.add(message_id) 
-                        text = item.get('text', '')  
+                        processed_messages.add(message_id)
+                        text = item.get('text', '')
                         if count == 0:
                             conversation.append({"role": "user", "content": text})
                             count += 1
-                        message_from = item.get('from_id', '')   
-                        type_message = item.get('type', '') 
-                        attachments = item.get('attachments', []) 
+                        message_from = item.get('from_id', '')
+                        type_message = item.get('type', '')
+                        attachments = item.get('attachments', [])
                         for attachment in attachments:
                             type_mes = attachment.get('type', '')
                             log_and_print("Тип Вложения:", type_mes)
@@ -145,7 +191,7 @@ try:
                                         'reply_to': message_id
                                         }
                                             )
-                                break  
+                                break
                             if message_from == chatter and type_mes == 'story':
                                 log_and_print("Сообщение от жертвы", message_from)
                                 finally_message_404 = requests.get(
@@ -172,10 +218,10 @@ try:
                                         'v': version,
                                         'reply_to': message_id
                                         }
-                                            )    
+                                            )
                             if message_from == chatter and type_mes == 'photo':
                                 conversation.append({"role": "user", "content": text })
-                                url = False                                   
+                                url = False
                                 log_and_print("Сообщение от жертвы и фото:", message_from)
                                 photo = attachment.get('photo', {})
                                 sizes = photo.get('sizes', [])
@@ -245,15 +291,15 @@ try:
                                      'access_token': another_token,
                                      'user_id': zhitenev_id,
                                      'random_id': 0,
-                                     'message': gpt_response, 
+                                     'message': gpt_response,
                                      'reply_to': message_id,
                                      'v': version
                                      }
                                      )
-                                    
+
 
                                 break
-                            
+
                             if message_from == chatter and type_mes == 'audio_message' :
                                  transcript_message = attachment.get('audio_message', {}).get('transcript', '')
                                  log_and_print("Сообщение от жертвы", message_from)
@@ -277,16 +323,16 @@ try:
                                      'access_token': another_token,
                                      'user_id': zhitenev_id,
                                      'random_id': 0,
-                                     'message':ready_audio_message, 
+                                     'message':ready_audio_message,
                                      'reply_to': message_id,
                                      'v': version
                                      }
                                      )
                                  except openai.error.APIError as e:
-                                     log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")    
+                                     log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")
                                      break
                             break
-                        if message_from == chatter and text != "" and already_processed_photo_text_ == False:              
+                        if message_from == chatter and text != "" and already_processed_photo_text_ == False:
                             log_and_print("Сообщение от жертвы", message_from)
                             log_and_print(text)
                             try:
@@ -318,8 +364,8 @@ try:
                             break
                         already_processed_photo_text_ = False
             if ischatter2 == True and user_typer2 == 'user':
-                if num2 == True:  
-                   log_and_print("Второй найден",user_texter, user_typer)    
+                if num2 == True:
+                   log_and_print("Второй найден",user_texter, user_typer)
                    num2 = False
                 messages = requests.get(
                     'https://api.vk.com/method/messages.getHistory',
@@ -341,14 +387,14 @@ try:
                         if message_id in processed_messages2:
                             log_and_print("Сообщение второй жертвы уже обработано")
                             break
-                        processed_messages2.add(message_id) 
+                        processed_messages2.add(message_id)
                         if count2 == 0:
                             conversation2.append({"role": "user", "content": text})
                             count2 += 1
-                        text = item.get('text', '')  
-                        message_from = item.get('from_id', '')   
-                        type_message = item.get('type', '') 
-                        attachments = item.get('attachments', []) 
+                        text = item.get('text', '')
+                        message_from = item.get('from_id', '')
+                        type_message = item.get('type', '')
+                        attachments = item.get('attachments', [])
                         for attachment in attachments:
                             type_mes = attachment.get('type', '')
                             log_and_print("Attachment Type:", type_mes)
@@ -366,7 +412,7 @@ try:
                                         'reply_to': message_id
                                         }
                                             )
-                                break  
+                                break
                             if message_from == chatter and type_mes == 'story':
                                 log_and_print("Сообщение от второй жертвы", message_from)
                                 finally_message_404 = requests.get(
@@ -383,11 +429,11 @@ try:
                                 break
                             if message_from == chatter and type_mes == 'photo':
                                 conversation2.append({"role": "user", "content": text })
-                                url = False                                   
+                                url = False
                                 log_and_print("Сообщение от жертвы и фото:", message_from)
                                 photo = attachment.get('photo', {})
                                 sizes = photo.get('sizes', [])
-                                
+
                                 for size in sizes:
                                     if size['type'] == 'w':
                                         url = size['url']
@@ -450,20 +496,20 @@ try:
                                      'access_token': another_token,
                                      'user_id': zhitenev_id2,
                                      'random_id': 0,
-                                     'message': gpt_response, 
+                                     'message': gpt_response,
                                      'reply_to': message_id,
                                      'v': version
                                      }
                                      )
-                                    
+
 
                                 break
-                            
+
                             if message_from == chatter and type_mes == 'audio_message':
                                 transcript_message = attachment.get('audio_message', {}).get('transcript', '')
                                 log_and_print("Сообщение от второй жертвы", message_from)
                                 log_and_print(transcript_message)
-    
+
                                 conversation2.append({"role": "user", "content": transcript_message})
                                 try:
                                   completion_audio = openai.ChatCompletion.create(
@@ -482,7 +528,7 @@ try:
                                   'access_token': another_token,
                                   'user_id': zhitenev_id2,
                                   'random_id': 0,
-                                  'message':ready_audio_message, 
+                                  'message':ready_audio_message,
                                   'reply_to': message_id,
                                   'v': version
                                   }
@@ -490,8 +536,8 @@ try:
                                 except openai.error.APIError as e:
                                   log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")
                                   break
-                              
-                                break 
+
+                                break
                             if message_from == chatter and type_mes == 'sticker':
                                   log_and_print("Сообщение от второй жертвы", message_from)
                                   finally_message_4041 = requests.get(
@@ -505,9 +551,9 @@ try:
                                       'v': version,
                                       'reply_to': message_id
                                       }
-                                          )      
+                                          )
                             break
-                        
+
                         if message_from == chatter2 and text != "" and already_processed_photo_text_2 == False:
                             log_and_print("Сообщение от второй жертвы", message_from)
                             log_and_print(text)
@@ -520,7 +566,7 @@ try:
                                   max_tokens=600,
                                   presence_penalty = 0.6,
                                   n = 3
-                                  ) 
+                                  )
                               ready_message = completion.choices[0].message.content
                               log_and_print("Ответ GPT:", completion.choices[0].message.content)
                               finally_message = requests.get(
@@ -535,8 +581,8 @@ try:
                               }
                                   )
                             except openai.error.APIError as e:
-                              log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")  
-                              break  
+                              log_and_print("Ошибка от  OpeanAI, Включите VPN. Сообщение пропущено(")
+                              break
                             break
 
                         already_processed_photo_text_2 = False
@@ -550,10 +596,10 @@ try:
 
             log_and_print('Прошло: {} часов и {} минут'.format(hours, minutes))
 
-    
+
             time_value = random.randint(12, time_end)
             log_and_print('Круг пройден: {}'.format(a))
-    
+
             if paused == True:
                 log_and_print("Пауза")
                 if os.name == "posix":
@@ -563,7 +609,7 @@ try:
                     subprocess.run(f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command disconnect {name_OPENVPN_Win}.ovpn', check=True, shell=True)
                     log_and_print("VPN успешно отключен на Windows.")
                 while Not_paused == False:
-                    time.sleep(10)                
+                    time.sleep(10)
                     # Получаем значения из конфигурационного файла
                     another_token = config['DEFAULT']['another_token']
                     openai.api_key = config['DEFAULT']['openai_api_key']
@@ -590,7 +636,7 @@ try:
                     except subprocess.CalledProcessError:
                         log_and_print("Ошибка при подключении к VPN")
 
-            time.sleep(time_value)  
+            time.sleep(time_value)
 
     finally:
         log_and_print("Завершение работы")
@@ -601,6 +647,6 @@ try:
         elif os.name == "nt":
             subprocess.run(f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command disconnect {name_OPENVPN_Win}.ovpn', check=True, shell=True)
             log_and_print("VPN успешно отключен на Windows.")
-            
+
 except Exception as e:
     log_and_print(f"Произошла не предвиденная ошибка: {e}")
