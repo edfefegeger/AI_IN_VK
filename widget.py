@@ -11,6 +11,7 @@ class AboutForm(QDialog):
         super().__init__(parent)
         self.ui = Ui_Form()
         self.ui.setupUi(self)
+        self.setWindowTitle("Информация о программе")
 
 class Widget(QWidget):
     def __init__(self, parent=None):
