@@ -186,7 +186,7 @@ try:
                                         'user_id': zhitenev_id,
                                         'random_id': 0,
                                         'attachment': "photo545067517_457254536",
-                                        'message': "Хуета ебаная",
+                                        'message': "1",
                                         'v': version,
                                         'reply_to': message_id
                                         }
@@ -213,7 +213,7 @@ try:
                                         'access_token': another_token,
                                         'user_id': zhitenev_id,
                                         'random_id': 0,
-                                        'message': "Не прогрузился, напиши текстом",
+                                        'message': "Не прогрузился, напишите текстом",
                                         'attachment': "doc545067517_623985008",
                                         'v': version,
                                         'reply_to': message_id

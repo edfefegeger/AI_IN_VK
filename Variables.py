@@ -2,11 +2,9 @@ import time
 import configparser
 
 config = configparser.ConfigParser()
-# Читаем файл конфигурации
 config.read('DATA.ini', encoding='utf-8')
 
 
-# Получаем значения из конфигурационного файла
 another_token = config['DEFAULT']['another_token']
 promt = config['DEFAULT']['promt']
 version = config['DEFAULT']['version']
