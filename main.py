@@ -25,6 +25,8 @@ config.read('DATA.ini', encoding='utf-8')
 # Получаем значения из конфигурационного файла
 openai.api_key = config['DEFAULT']['openai_api_key']
 
+
+
 class Widget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -251,7 +253,7 @@ try:
 
                                     payload = {
                                         "model": "gpt-4-turbo",
-                                         "messages": conversation2 + [
+                                         "messages": conversation + [
                                             {
                                                 "role": "system",
                                                 "content": [
@@ -347,6 +349,9 @@ try:
                                     )
                                 ready_message = completion.choices[0].message.content
                                 log_and_print("Ответ GPT:", completion.choices[0].message.content)
+
+                                conversation.append({"role": "system", "content": ready_message })
+                                
                                 finally_message = requests.get(
                                 'https://api.vk.com/method/messages.send',
                                 params={
