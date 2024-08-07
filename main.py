@@ -287,6 +287,8 @@ try:
                                     gpt_response = response.json()["choices"][0]["message"]["content"]
                                     log_and_print("Ответ GPT VISION:", gpt_response)
 
+                                    conversation.append({"role": "system", "content": gpt_response })
+
                                     finally_audio_message = requests.get(
                                      'https://api.vk.com/method/messages.send',
                                      params={
@@ -319,6 +321,9 @@ try:
                                      )
                                      ready_audio_message = completion_audio.choices[0].message.content
                                      log_and_print("Ответ GPT:", completion_audio.choices[0].message.content)
+
+                                     conversation.append({"role": "system", "content": ready_audio_message })
+
                                      finally_audio_message = requests.get(
                                      'https://api.vk.com/method/messages.send',
                                      params={
@@ -351,7 +356,7 @@ try:
                                 log_and_print("Ответ GPT:", completion.choices[0].message.content)
 
                                 conversation.append({"role": "system", "content": ready_message })
-                                
+
                                 finally_message = requests.get(
                                 'https://api.vk.com/method/messages.send',
                                 params={
@@ -412,7 +417,7 @@ try:
                                         'user_id': zhitenev_id2,
                                         'random_id': 0,
                                         'attachment': "photo545067517_457254536",
-                                        'message': "Хуета ебаная",
+                                        'message': "1",
                                         'v': version,
                                         'reply_to': message_id
                                         }
@@ -493,7 +498,12 @@ try:
 
                                     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
                                     gpt_response = response.json()["choices"][0]["message"]["content"]
+
+                                    conversation2.append({"role": "user", "content": gpt_response })
+
                                     log_and_print("Ответ GPT VISION:", gpt_response)
+
+                                    
 
                                     finally_audio_message = requests.get(
                                      'https://api.vk.com/method/messages.send',
@@ -527,6 +537,7 @@ try:
                                   )
                                   ready_audio_message = completion_audio.choices[0].message.content
                                   log_and_print("Ответ GPT:", completion_audio.choices[0].message.content)
+                                  conversation2.append({"role": "user", "content": ready_audio_message })
                                   finally_audio_message = requests.get(
                                   'https://api.vk.com/method/messages.send',
                                   params={
@@ -574,6 +585,7 @@ try:
                                   )
                               ready_message = completion.choices[0].message.content
                               log_and_print("Ответ GPT:", completion.choices[0].message.content)
+                              conversation2.append({"role": "user", "content": ready_message })
                               finally_message = requests.get(
                               'https://api.vk.com/method/messages.send',
                               params={
