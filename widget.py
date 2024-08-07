@@ -3,7 +3,7 @@ import subprocess
 import psutil
 from PySide6.QtWidgets import QApplication, QWidget, QDialog
 from ui_form import Ui_Widget
-from ui_about import Ui_Form  # Импортируем UI для нового окна
+from ui_about import Ui_Form  
 from logger import log_and_print
 
 class AboutForm(QDialog):
@@ -18,19 +18,19 @@ class Widget(QWidget):
         super().__init__(parent)
         self.ui = Ui_Widget()
         self.ui.setupUi(self)
-        self.setWindowTitle("Главное меню")  # Замените на нужное вам название
+        self.setWindowTitle("Главное меню")  
 
         self.process = None
 
-        # Подключаем кнопки к их функциям
-        self.ui.pushButton.clicked.connect(self.show_about_form)  # Открыть новое окно "О программе"
+
+        self.ui.pushButton.clicked.connect(self.show_about_form)  
         self.ui.pushButton_2.clicked.connect(self.on_start_button_clicked)  # Запустить main.py
-        self.ui.pushButton_3.clicked.connect(self.on_pause_button_clicked)  # Пауза
-        self.ui.pushButton_4.clicked.connect(self.on_resume_button_clicked)  # Продолжить
+        self.ui.pushButton_3.clicked.connect(self.on_pause_button_clicked)  
+        self.ui.pushButton_4.clicked.connect(self.on_resume_button_clicked) 
 
     def show_about_form(self):
         self.about_form = AboutForm(self)
-        self.about_form.exec()  # Открываем новое окно "О программе"
+        self.about_form.exec()  
 
     def on_start_button_clicked(self):
         if self.process is None:

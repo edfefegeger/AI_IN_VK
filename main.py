@@ -177,7 +177,7 @@ try:
                             log_and_print("Тип Вложения:", type_mes)
 
                             if message_from == chatter and type_mes == 'wall':
-                                log_and_print("Сообщение от жертвы", message_from)
+                                log_and_print("Сообщение от пользователя:", message_from)
                                 finally_message_404 = requests.get(
 
                                         'https://api.vk.com/method/messages.send',
@@ -193,7 +193,7 @@ try:
                                             )
                                 break
                             if message_from == chatter and type_mes == 'story':
-                                log_and_print("Сообщение от жертвы", message_from)
+                                log_and_print("Сообщение от пользователя:", message_from)
                                 finally_message_404 = requests.get(
                                         'https://api.vk.com/method/messages.send',
                                         params={
@@ -206,7 +206,7 @@ try:
                                         }
                                             )
                             if message_from == chatter and type_mes == 'sticker':
-                                log_and_print("Сообщение от жертвы", message_from)
+                                log_and_print("Сообщение от пользователя:", message_from)
                                 finally_message_404 = requests.get(
                                         'https://api.vk.com/method/messages.send',
                                         params={
@@ -302,7 +302,7 @@ try:
 
                             if message_from == chatter and type_mes == 'audio_message' :
                                  transcript_message = attachment.get('audio_message', {}).get('transcript', '')
-                                 log_and_print("Сообщение от жертвы", message_from)
+                                 log_and_print("Сообщение от пользователя:", message_from)
                                  log_and_print(transcript_message)
                                  try:
                                      conversation.append({"role": "user", "content": transcript_message})
@@ -333,7 +333,7 @@ try:
                                      break
                             break
                         if message_from == chatter and text != "" and already_processed_photo_text_ == False:
-                            log_and_print("Сообщение от жертвы", message_from)
+                            log_and_print("Сообщение от пользователя:", message_from)
                             log_and_print(text)
                             try:
                                 conversation.append({"role": "user", "content": text })
@@ -385,7 +385,7 @@ try:
                     for item in items:
                         message_id = item.get('id', '')
                         if message_id in processed_messages2:
-                            log_and_print("Сообщение второй жертвы уже обработано")
+                            log_and_print("Сообщение второго пользователя уже обработано")
                             break
                         processed_messages2.add(message_id)
                         if count2 == 0:
@@ -399,7 +399,7 @@ try:
                             type_mes = attachment.get('type', '')
                             log_and_print("Attachment Type:", type_mes)
                             if message_from == chatter and type_mes == 'wall':
-                                log_and_print("Сообщение от второй жертвы", message_from)
+                                log_and_print("Сообщение от второго пользователя:", message_from)
                                 finally_message_404 = requests.get(
                                         'https://api.vk.com/method/messages.send',
                                         params={
@@ -414,7 +414,7 @@ try:
                                             )
                                 break
                             if message_from == chatter and type_mes == 'story':
-                                log_and_print("Сообщение от второй жертвы", message_from)
+                                log_and_print("Сообщение от второго пользователя:", message_from)
                                 finally_message_404 = requests.get(
                                         'https://api.vk.com/method/messages.send',
                                         params={
@@ -430,7 +430,7 @@ try:
                             if message_from == chatter and type_mes == 'photo':
                                 conversation2.append({"role": "user", "content": text })
                                 url = False
-                                log_and_print("Сообщение от жертвы и фото:", message_from)
+                                log_and_print("Сообщение от второго пользоватля и фото:", message_from)
                                 photo = attachment.get('photo', {})
                                 sizes = photo.get('sizes', [])
 
@@ -507,7 +507,7 @@ try:
 
                             if message_from == chatter and type_mes == 'audio_message':
                                 transcript_message = attachment.get('audio_message', {}).get('transcript', '')
-                                log_and_print("Сообщение от второй жертвы", message_from)
+                                log_and_print("Сообщение от второго пользователя:", message_from)
                                 log_and_print(transcript_message)
 
                                 conversation2.append({"role": "user", "content": transcript_message})
@@ -539,7 +539,7 @@ try:
 
                                 break
                             if message_from == chatter and type_mes == 'sticker':
-                                  log_and_print("Сообщение от второй жертвы", message_from)
+                                  log_and_print("Сообщение от второго пользователя:", message_from)
                                   finally_message_4041 = requests.get(
                                           'https://api.vk.com/method/messages.send',
                                           params={
@@ -555,7 +555,7 @@ try:
                             break
 
                         if message_from == chatter2 and text != "" and already_processed_photo_text_2 == False:
-                            log_and_print("Сообщение от второй жертвы", message_from)
+                            log_and_print("Сообщение от второго пользователя:", message_from)
                             log_and_print(text)
                             conversation2.append({"role": "user", "content": text })
                             try:
