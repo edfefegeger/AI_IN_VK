@@ -1,6 +1,7 @@
 import logging
 import telebot
 from telebot import types
+from Variables import CHAT_ID, CHAT_ID2
 import configparser
 
 config = configparser.ConfigParser()

@@ -1,5 +1,4 @@
 import base64
-import keyboard
 import requests
 import time
 import openai
@@ -10,9 +9,9 @@ import subprocess
 import configparser
 from logger import log_and_print
 from Long_poll import Get_Long_Poll
-from Variables import another_token, promt, version, time_end, name_OPENVPN_Linux, name_OPENVPN_Win, num, num2, processed_messages, processed_messages2, a, b, count, count2, conversation, conversation2, start, minutes, ischatter, ischatter2, user_texter2, id_caught, id_caught2, type_mes, already_processed_photo_text_, already_processed_photo_text_2, my_id, command, command2
+from Variables import another_token, promt, version, time_end, name_OPENVPN_Win, num, num2, processed_messages, processed_messages2, a, count, count2, conversation, conversation2, start, minutes, ischatter, ischatter2, user_texter2, id_caught, id_caught2, type_mes, already_processed_photo_text_, already_processed_photo_text_2, command, command2
 from ui_form import Ui_Widget
-from PySide6.QtWidgets import QApplication, QWidget, QDialog
+from PySide6.QtWidgets import QWidget
 from pause import paused, Not_paused
 
 tprint("WELCOME")
@@ -20,9 +19,7 @@ tprint("VK ASSISTANT")
 ts = None
 config = configparser.ConfigParser()
 log_and_print('Запуск')
-# Читаем файл конфигурации
 config.read('DATA.ini', encoding='utf-8')
-# Получаем значения из конфигурационного файла
 openai.api_key = config['DEFAULT']['openai_api_key']
 
 
@@ -143,7 +140,7 @@ try:
 
             if ischatter == True and user_typer == 'user':
                 if num == True:
-                    log_and_print("Первый найден",user_texter, user_typer)
+                    log_and_print("Первый пользователь найден",user_texter, user_typer)
                     num = False
 
                 messages = requests.get(
@@ -224,7 +221,7 @@ try:
                             if message_from == chatter and type_mes == 'photo':
                                 conversation.append({"role": "user", "content": text })
                                 url = False
-                                log_and_print("Сообщение от жертвы и фото:", message_from)
+                                log_and_print("Сообщение от пользователя и фото:", message_from)
                                 photo = attachment.get('photo', {})
                                 sizes = photo.get('sizes', [])
 
@@ -375,7 +372,7 @@ try:
                         already_processed_photo_text_ = False
             if ischatter2 == True and user_typer2 == 'user':
                 if num2 == True:
-                   log_and_print("Второй найден",user_texter, user_typer)
+                   log_and_print("Второй пользователь найден",user_texter, user_typer)
                    num2 = False
                 messages = requests.get(
                     'https://api.vk.com/method/messages.getHistory',
@@ -607,9 +604,9 @@ try:
             finish = time.time()
             seconds = int(finish - start)
 
-            minutes = seconds // 60  # Получаем количество минут
-            hours = minutes // 60  # Получаем количество часов
-            minutes %= 60  # Оставляем только остаток минут
+            minutes = seconds // 60  
+            hours = minutes // 60 
+            minutes %= 60  
 
             log_and_print('Прошло: {} часов и {} минут'.format(hours, minutes))
 
@@ -627,7 +624,7 @@ try:
                     log_and_print("VPN успешно отключен на Windows.")
                 while Not_paused == False:
                     time.sleep(10)
-                    # Получаем значения из конфигурационного файла
+
                     another_token = config['DEFAULT']['another_token']
                     openai.api_key = config['DEFAULT']['openai_api_key']
                     promt = config['DEFAULT']['promt']

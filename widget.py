@@ -24,7 +24,7 @@ class Widget(QWidget):
 
 
         self.ui.pushButton.clicked.connect(self.show_about_form)  
-        self.ui.pushButton_2.clicked.connect(self.on_start_button_clicked)  # Запустить main.py
+        self.ui.pushButton_2.clicked.connect(self.on_start_button_clicked)  
         self.ui.pushButton_3.clicked.connect(self.on_pause_button_clicked)  
         self.ui.pushButton_4.clicked.connect(self.on_resume_button_clicked) 
 
