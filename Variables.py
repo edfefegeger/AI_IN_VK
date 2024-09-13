@@ -38,3 +38,10 @@ my_id = '545067517'
 paused = False
 command = f'nmcli connection up {name_OPENVPN_Linux}'
 command2 = f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command connect {name_OPENVPN_Win}.ovpn'
+
+
+dbname = config['Data_Base']['dbname']
+user = config['Data_Base']['user']
+password = config['Data_Base']['password']
+host = config['Data_Base']['host']
+port = config['Data_Base']['port']

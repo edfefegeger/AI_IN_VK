@@ -14,6 +14,10 @@ from ui_form import Ui_Widget
 from PySide6.QtWidgets import QWidget
 from pause import paused, Not_paused
 
+from Data_base import insert_into_table
+from datetime import datetime
+
+
 tprint("WELCOME")
 tprint("VK ASSISTANT")
 ts = None
@@ -141,6 +145,8 @@ try:
             if ischatter == True and user_typer == 'user':
                 if num == True:
                     log_and_print("Первый пользователь найден",user_texter, user_typer)
+
+                    insert_into_table(user_texter, datetime.now(), "Пользователь найден!")
                     num = False
 
                 messages = requests.get(
@@ -177,6 +183,7 @@ try:
 
                             if message_from == chatter and type_mes == 'wall':
                                 log_and_print("Сообщение от пользователя:", message_from)
+                                insert_into_table(user_texter, datetime.now(), "Пользоваетель отправил запись со стены")
                                 finally_message_404 = requests.get(
 
                                         'https://api.vk.com/method/messages.send',
@@ -193,6 +200,7 @@ try:
                                 break
                             if message_from == chatter and type_mes == 'story':
                                 log_and_print("Сообщение от пользователя:", message_from)
+                                insert_into_table(user_texter, datetime.now(), "Пользоваетель отправил историю")
                                 finally_message_404 = requests.get(
                                         'https://api.vk.com/method/messages.send',
                                         params={
@@ -206,6 +214,7 @@ try:
                                             )
                             if message_from == chatter and type_mes == 'sticker':
                                 log_and_print("Сообщение от пользователя:", message_from)
+                                insert_into_table(user_texter, datetime.now(), "Пользоваетель стикер")
                                 finally_message_404 = requests.get(
                                         'https://api.vk.com/method/messages.send',
                                         params={
@@ -219,6 +228,7 @@ try:
                                         }
                                             )
                             if message_from == chatter and type_mes == 'photo':
+                                insert_into_table(user_texter, datetime.now(), "Пользователь отправил фото")
                                 conversation.append({"role": "user", "content": text })
                                 url = False
                                 log_and_print("Сообщение от пользователя и фото:", message_from)
@@ -303,6 +313,7 @@ try:
 
                             if message_from == chatter and type_mes == 'audio_message' :
                                  transcript_message = attachment.get('audio_message', {}).get('transcript', '')
+                                 insert_into_table(user_texter, datetime.now(), f"Пользователь отправил ГС: {transcript_message}")
                                  log_and_print("Сообщение от пользователя:", message_from)
                                  log_and_print(transcript_message)
                                  try:
@@ -338,6 +349,7 @@ try:
                             break
                         if message_from == chatter and text != "" and already_processed_photo_text_ == False:
                             log_and_print("Сообщение от пользователя:", message_from)
+                            insert_into_table(user_texter, datetime.now(), text)
                             log_and_print(text)
                             try:
                                 conversation.append({"role": "user", "content": text })
@@ -373,6 +385,7 @@ try:
             if ischatter2 == True and user_typer2 == 'user':
                 if num2 == True:
                    log_and_print("Второй пользователь найден",user_texter, user_typer)
+                   insert_into_table(user_texter, datetime.now(), "Второй пользователь найден")
                    num2 = False
                 messages = requests.get(
                     'https://api.vk.com/method/messages.getHistory',
@@ -405,7 +418,9 @@ try:
                         for attachment in attachments:
                             type_mes = attachment.get('type', '')
                             log_and_print("Attachment Type:", type_mes)
+
                             if message_from == chatter and type_mes == 'wall':
+                                insert_into_table(message_from, datetime.now(), "Второй пользователь отправил запись со стены")
                                 log_and_print("Сообщение от второго пользователя:", message_from)
                                 finally_message_404 = requests.get(
                                         'https://api.vk.com/method/messages.send',
@@ -421,6 +436,7 @@ try:
                                             )
                                 break
                             if message_from == chatter and type_mes == 'story':
+                                insert_into_table(message_from, datetime.now(), "Второй пользователь отправил историю")
                                 log_and_print("Сообщение от второго пользователя:", message_from)
                                 finally_message_404 = requests.get(
                                         'https://api.vk.com/method/messages.send',
@@ -435,6 +451,7 @@ try:
                                             )
                                 break
                             if message_from == chatter and type_mes == 'photo':
+                                insert_into_table(message_from, datetime.now(), "Второй пользователь отправил фото")
                                 conversation2.append({"role": "user", "content": text })
                                 url = False
                                 log_and_print("Сообщение от второго пользоватля и фото:", message_from)
@@ -519,6 +536,7 @@ try:
 
                             if message_from == chatter and type_mes == 'audio_message':
                                 transcript_message = attachment.get('audio_message', {}).get('transcript', '')
+                                insert_into_table(message_from, datetime.now(), f"Второй пользователь гс: {transcript_message}")
                                 log_and_print("Сообщение от второго пользователя:", message_from)
                                 log_and_print(transcript_message)
 
@@ -552,6 +570,7 @@ try:
 
                                 break
                             if message_from == chatter and type_mes == 'sticker':
+                                  insert_into_table(message_from, datetime.now(), "Второй пользователь отправил стикер")
                                   log_and_print("Сообщение от второго пользователя:", message_from)
                                   finally_message_4041 = requests.get(
                                           'https://api.vk.com/method/messages.send',
@@ -568,6 +587,7 @@ try:
                             break
 
                         if message_from == chatter2 and text != "" and already_processed_photo_text_2 == False:
+                            insert_into_table(message_from, datetime.now(), text)
                             log_and_print("Сообщение от второго пользователя:", message_from)
                             log_and_print(text)
                             conversation2.append({"role": "user", "content": text })
