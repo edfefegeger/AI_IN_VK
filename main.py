@@ -191,8 +191,7 @@ try:
                                         'access_token': another_token,
                                         'user_id': zhitenev_id,
                                         'random_id': 0,
-                                        'attachment': "photo545067517_457254536",
-                                        'message': "1",
+                                        'message': "Пришли информацию текстом",
                                         'v': version,
                                         'reply_to': message_id
                                         }
@@ -207,7 +206,7 @@ try:
                                         'access_token': another_token,
                                         'user_id': zhitenev_id,
                                         'random_id': 0,
-                                        'attachment': "photo545067517_457254537",
+                                        'message': "Пришли информацию текстом",
                                         'v': version,
                                         'reply_to': message_id
                                         }
@@ -382,6 +381,7 @@ try:
                                 break
                             break
                         already_processed_photo_text_ = False
+
             if ischatter2 == True and user_typer2 == 'user':
                 if num2 == True:
                    log_and_print("Второй пользователь найден",user_texter, user_typer)
@@ -444,7 +444,7 @@ try:
                                         'access_token': another_token,
                                         'user_id': zhitenev_id2,
                                         'random_id': 0,
-                                        'attachment': "photo545067517_457254537",
+                                        'message': "Пришли информацию текстом",
                                         'v': version,
                                         'reply_to': message_id
                                         }
