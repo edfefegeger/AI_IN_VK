@@ -428,8 +428,7 @@ try:
                                         'access_token': another_token,
                                         'user_id': zhitenev_id2,
                                         'random_id': 0,
-                                        'attachment': "photo545067517_457254536",
-                                        'message': "1",
+                                        'message': "Пришли информацию текстом",
                                         'v': version,
                                         'reply_to': message_id
                                         }
