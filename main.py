@@ -26,7 +26,8 @@ log_and_print('Запуск')
 config.read('DATA.ini', encoding='utf-8')
 openai.api_key = config['DEFAULT']['openai_api_key']
 
-
+print("Использовать подключение к OpenVPN? n = Нет, y = Да")
+question = input()
 
 class Widget(QWidget):
     def __init__(self, parent=None):
@@ -53,20 +54,19 @@ class Widget(QWidget):
         log_and_print("Функция toggle_pause2 вызвана через GUI")
 
 try:
-
-    if os.name == "posix":
-        try:
-            os.system(command)
-            log_and_print("VPN успешно подключен на Linux/Unix.")
-        except:
-            log_and_print("Ошибка при подключении к VPN")
-
-    if os.name == "nt":
-        try:
-            subprocess.run(command2, check=True, shell=True)
-            log_and_print("VPN успешно подключен на Windows.")
-        except subprocess.CalledProcessError:
-            log_and_print("Ошибка при подключении к VPN")
+    if question == 'y':
+        if os.name == "posix":
+            try:
+                os.system(command)
+                log_and_print("VPN успешно подключен на Linux/Unix.")
+            except:
+                log_and_print("Ошибка при подключении к VPN")
+        if os.name == "nt":
+            try:
+                subprocess.run(command2, check=True, shell=True)
+                log_and_print("VPN успешно подключен на Windows.")
+            except subprocess.CalledProcessError:
+                log_and_print("Ошибка при подключении к VPN")
 
     def toggle_pause():
         global paused
@@ -654,20 +654,20 @@ try:
 
 
                 log_and_print("Снятие с паузы")
-
-                if os.name == "posix":
-                    try:
-                        os.system(command)
-                        log_and_print("VPN успешно подключен на Linux/Unix.")
-                    except:
-                        log_and_print("Ошибка при подключении к VPN")
-
-                if os.name == "nt":
-                    try:
-                        subprocess.run(command2, check=True, shell=True)
-                        log_and_print("VPN успешно подключен на Windows.")
-                    except subprocess.CalledProcessError:
-                        log_and_print("Ошибка при подключении к VPN")
+                if question == 'y':
+                    if os.name == "posix":
+                        try:
+                            os.system(command)
+                            log_and_print("VPN успешно подключен на Linux/Unix.")
+                        except:
+                            log_and_print("Ошибка при подключении к VPN")
+    
+                    if os.name == "nt":
+                        try:
+                            subprocess.run(command2, check=True, shell=True)
+                            log_and_print("VPN успешно подключен на Windows.")
+                        except subprocess.CalledProcessError:
+                            log_and_print("Ошибка при подключении к VPN")
 
             time.sleep(time_value)
 
