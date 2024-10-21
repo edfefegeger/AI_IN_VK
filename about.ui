@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>825</width>
+    <height>244</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>825</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string> Эта программа представляет собой помощника/консультанта в VK с интеграцией CHAT GPT, который способен 
+ самостоятельно общаться в мессенджере с тонко заданными параметрами пользователем. 
+ Программа включает в себя обработку текста, аудио, фото, и другого . Она способна 
+ автоматически перехватывать новые сообщения с момента запуска программы 
+ и максимум может работать с двумя собеседниками в автоматическом режиме. 
+ Программа также интегрирована с библиотекой Telebot что позволяет отправлять все логи 
+ и сообщения о работе программы в специального бота оповещений. Также при запуске 
+ программы она автоматически начнет подключение к OPENVPN.</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

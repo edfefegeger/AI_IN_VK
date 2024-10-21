@@ -2,17 +2,17 @@ import time
 import configparser
 
 config = configparser.ConfigParser()
-# Читаем файл конфигурации
 config.read('DATA.ini', encoding='utf-8')
 
 
-# Получаем значения из конфигурационного файла
 another_token = config['DEFAULT']['another_token']
 promt = config['DEFAULT']['promt']
 version = config['DEFAULT']['version']
 time_end = int(config['DEFAULT']['time_end'])
 name_OPENVPN_Linux = config['DEFAULT']['name_OPENVPN_Linux']
 name_OPENVPN_Win = config['DEFAULT']['name_OPENVPN_Win']
+CHAT_ID = config['TELEGRAM']['USER_ID1']
+CHAT_ID2 = config['TELEGRAM']['USER_ID2']
 num = True
 num2 = True
 processed_messages = set() 
@@ -35,7 +35,13 @@ type_mes = ''
 already_processed_photo_text_ = False
 already_processed_photo_text_2 = False
 my_id = '545067517'
-domain = 'strongmennewschool'
 paused = False
 command = f'nmcli connection up {name_OPENVPN_Linux}'
 command2 = f'"C:\\Program Files\\OpenVPN\\bin\\openvpn-gui.exe" --command connect {name_OPENVPN_Win}.ovpn'
+
+
+dbname = config['Data_Base']['dbname']
+user = config['Data_Base']['user']
+password = config['Data_Base']['password']
+host = config['Data_Base']['host']
+port = config['Data_Base']['port']
